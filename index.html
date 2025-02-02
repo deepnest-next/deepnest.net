@@ -5474,15 +5474,27 @@
 
 					<p>deepnest-next latest deepnest release: <br \><span class="dl_version">-not loaded-</span></p>
 					<div id="download-links" style="display: block">
-						<a href="javascript:notAvailabel('Windows');" class="btn btn-default btn-lg download" id="dl_win32"
+						<a href="javascript:notAvailabel('Windows');" class="btn btn-default btn-lg download" id="dl_win32_x86"
 							style="background-image: url(/img/windows.svg); background-repeat: no-repeat; background-size: 30px 30px; background-position: 20px 7px; padding-left: 60px">Download
-							for Windows</a>
-						<a href="javascript:notAvailabel('MacOS');" class="btn btn-default btn-lg download" id="dl_mac"
+							for Windows (x86)</a>
+						<a href="javascript:notAvailabel('Windows');" class="btn btn-default btn-lg download" id="dl_win32_x64"
+							style="background-image: url(/img/windows.svg); background-repeat: no-repeat; background-size: 30px 30px; background-position: 20px 7px; padding-left: 60px">Download
+							for Windows (x64)</a>
+						<a href="javascript:notAvailabel('Windows');" class="btn btn-default btn-lg download" id="dl_win32_arm64"
+							style="background-image: url(/img/windows.svg); background-repeat: no-repeat; background-size: 30px 30px; background-position: 20px 7px; padding-left: 60px">Download
+							for Windows (arm64)</a>
+						<a href="javascript:notAvailabel('MacOS');" class="btn btn-default btn-lg download" id="dl_mac_x64"
 							style="background-image: url(/img/apple.svg); background-repeat: no-repeat; background-size: 30px 30px; background-position: 15px 7px; padding-left: 55px">Download
-							for OSX</a>
-						<a href="javascript:notAvailabel('Linux');" class="btn btn-default btn-lg download" id="dl_linux"
+							for OSX (x64)</a>
+						<a href="javascript:notAvailabel('MacOS');" class="btn btn-default btn-lg download" id="dl_mac_arm64"
+							style="background-image: url(/img/apple.svg); background-repeat: no-repeat; background-size: 30px 30px; background-position: 15px 7px; padding-left: 55px">Download
+							for OSX (arm64)</a>
+						<a href="javascript:notAvailabel('Linux');" class="btn btn-default btn-lg download" id="dl_linux_x64"
 							style="background-image: url(/img/linux.svg); background-repeat: no-repeat; background-size: 30px 30px; background-position: 20px 7px; padding-left: 60px">Download
-							for Linux</a>
+							for Linux (x64)</a>
+						<a href="javascript:notAvailabel('Linux');" class="btn btn-default btn-lg download" id="dl_linux_arm64"
+							style="background-image: url(/img/linux.svg); background-repeat: no-repeat; background-size: 30px 30px; background-position: 20px 7px; padding-left: 60px">Download
+							for Linux (arm64)</a>
 					</div>
 
 				</div>
@@ -5624,9 +5636,13 @@
 
 				// Suche nach Plattformen und setze die Button-Links
 				const platforms = {
-					win32: 'dl_win32',
-					darwin: 'dl_mac',
-					linux: 'dl_linux'
+					"win32-i32": 'dl_win32_x86',
+					"win32-x64": 'dl_win32_x64',
+					"win32-arm64": 'dl_win32_arm64',
+					"darwin-x64": 'dl_mac_x64',
+					"darwin-arm64": 'dl_mac_arm64',
+					"linux-x64": 'dl_linux_x64',
+					"linux-arm64": 'dl_linux_arm64'
 				};
 
 				Object.keys(platforms).forEach(platform => {
