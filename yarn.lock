@@ -110,6 +110,23 @@
     debug "^4.4.0"
     posthtml-match-helper "^2.0.3"
 
+"@11ty/eleventy-plugin-rss@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@11ty/eleventy-plugin-rss/-/eleventy-plugin-rss-2.0.3.tgz#460d06987636b316abbaaaa67c7ae6aa4067d7e8"
+  integrity sha512-ubK97uahCLpKhORLfblgxLcoaNqTcKde1cH8CeRKNTFoUuuDSEjWZtodV9fKrg+uOp5X74dO43z1/io6hhs5Bw==
+  dependencies:
+    "@11ty/eleventy-utils" "^2.0.0"
+    "@11ty/posthtml-urls" "^1.0.1"
+    debug "^4.4.0"
+    posthtml "^0.16.6"
+
+"@11ty/eleventy-plugin-syntaxhighlight@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@11ty/eleventy-plugin-syntaxhighlight/-/eleventy-plugin-syntaxhighlight-5.0.0.tgz#dc1c43427624a5326f5dda0fe8fbe3805225fdb8"
+  integrity sha512-y9BUmP1GofmbJgxM1+ky/UpFCpD8JSOeLeKItUs0WApgnrHk9haHziW7lS86lbArX5SiCVo4zTTw9x53gvRCaA==
+  dependencies:
+    prismjs "^1.29.0"
+
 "@11ty/eleventy-utils@^1.0.1", "@11ty/eleventy-utils@^1.0.2", "@11ty/eleventy-utils@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@11ty/eleventy-utils/-/eleventy-utils-1.0.3.tgz#fb70305aed2499eba93b7d1d31de045efe3997fa"
@@ -255,7 +272,7 @@
   resolved "https://registry.yarnpkg.com/@11ty/lodash-custom/-/lodash-custom-4.17.21.tgz#a8d2e25a47ee3bb58b71cde4edc2ae8dd3d1b269"
   integrity sha512-Mqt6im1xpb1Ykn3nbcCovWXK3ggywRJa+IXIdoz4wIIK+cvozADH63lexcuPpGS/gJ6/m2JxyyXDyupkMr5DHw==
 
-"@11ty/posthtml-urls@^1.0.0":
+"@11ty/posthtml-urls@^1.0.0", "@11ty/posthtml-urls@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@11ty/posthtml-urls/-/posthtml-urls-1.0.1.tgz#3e0680c0ea96d25e24b4afd0f2b156467c2323c8"
   integrity sha512-6EFN/yYSxC/OzYXpq4gXDyDMlX/W+2MgCvvoxf11X1z76bqkqFJ8eep5RiBWfGT5j0323a1pwpelcJJdR46MCw==
@@ -720,6 +737,11 @@
   integrity sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==
   dependencies:
     "@types/node" "*"
+
+"@zachleat/heading-anchors@^1.0.1":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@zachleat/heading-anchors/-/heading-anchors-1.0.3.tgz#f0c5f99adf5e8d709d184b829cbf1cb54152d4fb"
+  integrity sha512-PJPy09KrJK//1MQLMcfe7i5QFGdlseZ1a+oy1Y0nlcVHbupnnZjFBj25dAGnYEbJ4OMXe3c8c9dyJoWWbXr2iA==
 
 a-sync-waterfall@^1.0.0:
   version "1.0.1"
@@ -4285,7 +4307,7 @@ postcss-value-parser@^4.2.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@^8.4.4, postcss@^8.5.1:
+postcss@^8.4.4, postcss@^8.5.1, postcss@^8.5.3:
   version "8.5.3"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.3.tgz#1463b6f1c7fb16fe258736cba29a2de35237eafb"
   integrity sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==
@@ -4356,6 +4378,11 @@ pretty@^2.0.0:
     condense-newlines "^0.2.1"
     extend-shallow "^2.0.1"
     js-beautify "^1.6.12"
+
+prismjs@^1.29.0:
+  version "1.29.0"
+  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.29.0.tgz#f113555a8fa9b57c35e637bba27509dcf802dd12"
+  integrity sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==
 
 promise-each@^2.2.0:
   version "2.2.0"
@@ -5698,6 +5725,7 @@ wordwrap@^1.0.0:
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -5807,3 +5835,13 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod-validation-error@^3.3.1:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/zod-validation-error/-/zod-validation-error-3.4.0.tgz#3a8a1f55c65579822d7faa190b51336c61bee2a6"
+  integrity sha512-ZOPR9SVY6Pb2qqO5XHt+MkkTRxGXb4EVtnjc9JpXUOtUB1T9Ru7mZOT361AN3MsetVe7R0a1KZshJDZdgp9miQ==
+
+zod@^3.23.8:
+  version "3.24.2"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.24.2.tgz#8efa74126287c675e92f46871cfc8d15c34372b3"
+  integrity sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==

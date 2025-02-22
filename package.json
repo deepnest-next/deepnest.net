@@ -2,16 +2,28 @@
   "name": "deepnest.net",
   "version": "1.0.0",
   "description": "deepnest.net website",
-  "main": "index.js",
+  "type": "module",
   "repository": "https://github.com/deepnest-next/deepnest.net.git",
   "author": "Josef Froehle <github@josef-froehle.de>",
   "license": "AGPL-3.0-only",
   "private": true,
+  "scripts": {
+		"build": "npx @11ty/eleventy",
+		"build-nocolor": "cross-env NODE_DISABLE_COLORS=1 npx @11ty/eleventy",
+		"build-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/",
+		"start": "npx @11ty/eleventy --serve --quiet",
+		"start-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/ --serve --quiet",
+		"debug": "cross-env DEBUG=Eleventy* npx @11ty/eleventy",
+		"debugstart": "cross-env DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
+		"benchmark": "cross-env DEBUG=Eleventy:Benchmark* npx @11ty/eleventy"
+	},
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
     "@11ty/eleventy-fetch": "^5.0.2",
     "@11ty/eleventy-img": "^6.0.1",
     "@11ty/eleventy-navigation": "^0.3.5",
+    "@11ty/eleventy-plugin-rss": "^2.0.3",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "@aaashur/eleventy-plugin-add-remote-data": "^1.0.0",
     "@aloskutov/eleventy-plugin-external-links": "^2.1.1",
     "@pcdevil/eleventy-plugin-intl-utils": "^1.1.0",
@@ -39,6 +51,14 @@
     "rosetta": "^1.1.0",
     "slugify": "^1.6.6",
     "stylelint": "^16.14.1",
-    "stylelint-config-standard-scss": "^14.0.0"
+    "stylelint-config-standard-scss": "^14.0.0",
+    "luxon": "^3.5.0",
+    "prismjs": "^1.29.0",
+    "zod": "^3.23.8",
+    "zod-validation-error": "^3.3.1"
+  },
+  "dependencies": {
+    "@zachleat/heading-anchors": "^1.0.1",
+    "postcss": "^8.5.3"
   }
 }
