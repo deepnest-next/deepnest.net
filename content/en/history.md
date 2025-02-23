@@ -7,8 +7,10 @@ draft: true
 tags: []
 categories: []
 eleventyNavigation:
-  key: "History"
+  key: history
   order: 5
+  title: History
+type: page
 ---
 # History
 

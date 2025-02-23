@@ -76,7 +76,7 @@
                 {%- if not loop.first %}, {% endif %}
                 <a href="{{link.url}}" lang="{{link.lang}}" hreflang="{{link.lang}}">{{link.label}}</a>
             {%- endfor %}</p>
-			<p><a href="{{ "/"+page.lang+"/imprint/index.html" | locale_url }}">Impressum</a></p>
+			<p><a href="{{ "/en/legal-notice/" | locale_url(page.lang) }}">Impressum</a> &bull; <a href="{{ "/en/privacy/" | locale_url(page.lang) }}">Datenschutz</a> &bull; <a href="{{ "/en/tos/" | locale_url(page.lang) }}">Nutzungs und Geschäftsbedingungen</a></p>
 			<p><em>Built with <a href="https://www.11ty.dev/">{{ eleventy.generator }}</a></em></p>
 		</footer>
 

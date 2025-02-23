@@ -1,5 +1,5 @@
 ---
-permalink: "/{{lang}}/impressum/"
+slugOverride: impressum
 eleventyNavigation:
   key: "Imprint"
   title: Impressum

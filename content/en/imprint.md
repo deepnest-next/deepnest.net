@@ -1,9 +1,10 @@
 ---
-permalink: "/{{lang}}/legal-notice/"
+permalink: /{{lang}}/legal-notice/
 eleventyNavigation:
-  key: "Imprint"
+  key: Imprint
   title: Imprint
   order: 3
+type: page
 ---
 # Impressum
 

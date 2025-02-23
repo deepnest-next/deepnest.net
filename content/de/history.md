@@ -1,5 +1,5 @@
 ---
-title: History
+title: Historie
 description: ""
 date: 2025-02-22T20:10:57.151Z
 preview: ""
@@ -7,9 +7,11 @@ draft: true
 tags: []
 categories: []
 eleventyNavigation:
-  key: "History"
+  key: "history"
+  title: Historie
   order: 5
+slugOverride: Historie
 ---
-# History
+# Historie
 
-I am a person that writes stuff.
+Timeline

@@ -1,8 +1,10 @@
 ---
 eleventyNavigation:
-  key: "About"
+  key: about
+  title: "Über uns"
   order: 3
+slugOverride: ueber-uns
 ---
-# About
+# Über uns
 
 I am a person that writes stuff.

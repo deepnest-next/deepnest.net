@@ -7,8 +7,11 @@ draft: true
 tags: []
 categories: []
 eleventyNavigation:
-  key: "History"
+  key: history
   order: 5
+  title: History_nl
+type: page
+slugOverride: history_nl
 ---
 # History
 
