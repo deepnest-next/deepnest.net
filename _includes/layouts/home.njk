@@ -13,4 +13,31 @@ layout: layouts/base.njk
 </div>
 <!-- Stop deleting -->
 
+<code><pre>
+ {{ ctx | dump}}
+ </pre></code>
+ <code><pre>
+ {{ eleventy | dump}}
+ </pre></code>
+ <code><pre>
+ {{ env | dump}}
+ </pre></code>
+ <code><pre>
+ {{ page | dump}}
+                 {{ page.lang | dump}}
+ </pre></code>
+                {%- for entry in collections.all | eleventyNavigation %}
+                {%- set entryLangUrl = entry.url | locale_links -%}
+
+                <code><pre>
+                {{ entry | dump}}
+                ----
+                {{ checkLangInUrls(page.lang, entryLangUrl) | dump}} - {{ startWithLocale(page.lang, entry.url) |dump }}
+
+                </pre></code>
+                {%- if not checkLangInUrls(page.lang, entryLangUrl) and startWithLocale(page.lang, entry.url) -%}
+					<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
+                {%- endif %}
+				{%- endfor %}
+
 {{ content | safe }}

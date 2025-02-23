@@ -7,6 +7,16 @@
 		<meta name="description" content="{{ description or metadata.description }}">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
 
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+
+        <link rel="alternate" hreflang="{{lang}}" href="{{page.url}}">
+  {% for link in page.url | locale_links %}
+    <link rel="alternate" hreflang="{{link.lang}}" href="https://www.11ty.dev{{link.url}}">
+  {% endfor %}
+
 		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
 		{#- <meta name="generator" content="{{ eleventy.generator }}"> #}
 
@@ -47,8 +57,10 @@
 				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
 				{%- for entry in collections.all | eleventyNavigation %}
+                {%- if startWithLocale(page.lang, entry.url) -%}
 					<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
-				{%- endfor %}
+				{%- endif %}
+                {%- endfor %}
 				</ul>
 			</nav>
 		</header>
@@ -60,6 +72,11 @@
 		</main>
 
 		<footer>
+            <p>Also available translation: {% for link in page.url | locale_links -%}
+                {%- if not loop.first %}, {% endif %}
+                <a href="{{link.url}}" lang="{{link.lang}}" hreflang="{{link.lang}}">{{link.label}}</a>
+            {%- endfor %}</p>
+			<p><a href="{{ "/"+page.lang+"/imprint/index.html" | locale_url }}">Impressum</a></p>
 			<p><em>Built with <a href="https://www.11ty.dev/">{{ eleventy.generator }}</a></em></p>
 		</footer>
 

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.taxonomy.contentTypes": [
+  ],
+  "frontMatter.framework.id": "11ty",
+  "frontMatter.preview.host": "http://localhost:8080",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "Content",
+      "path": "[[workspace]]/content",
+      "defaultLocale": "en"
+    }
+  ],
+  "frontMatter.git.enabled": true,
+  "frontMatter.content.i18n": [
+    {
+      "title": "English",
+      "locale": "en",
+      "path": "en"
+    },
+    {
+      "title": "German",
+      "locale": "de",
+      "path": "de"
+    },
+    {
+      "title": "Dutch",
+      "locale": "nl",
+      "path": "nl"
+    }
+  ]
+}
