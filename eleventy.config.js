@@ -1,4 +1,4 @@
-import { IdAttributePlugin, InputPathToUrlTransformPlugin, HtmlBasePlugin, EleventyI18nPlugin } from "@11ty/eleventy";
+import { IdAttributePlugin, InputPathToUrlTransformPlugin, HtmlBasePlugin, EleventyI18nPlugin, EleventyRenderPlugin } from "@11ty/eleventy";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
@@ -8,13 +8,16 @@ import pluginFilters from "./_config/filters.js";
 
 // Community Plugins
 import externalLinks from "@aloskutov/eleventy-plugin-external-links";
+import postcss from "postcss";
+import postcssNested from "postcss-nested";
+import tailwindcss from "@tailwindcss/postcss";
 
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
-export default async function(eleventyConfig) {
+export default async function (eleventyConfig) {
 	// Drafts, see also _data/eleventyDataSchema.js
 	eleventyConfig.addPreprocessor("drafts", "*", (data, content) => {
-		if(data.draft && process.env.ELEVENTY_RUN_MODE === "build") {
+		if (data.draft && process.env.ELEVENTY_RUN_MODE === "build") {
 			return false;
 		}
 	});
@@ -23,8 +26,9 @@ export default async function(eleventyConfig) {
 	// For example, `./public/css/` ends up in `_site/css/`
 	eleventyConfig
 		.addPassthroughCopy({
-			"./public/": "/"
-		})
+			"./public/": "/",
+			"./public/img/": "/img/"
+		}, {})
 		.addPassthroughCopy("./content/en/feed/pretty-atom-feed.xsl")
 		.addPassthroughCopy("./content/de/feed/pretty-atom-feed.xsl")
 		.addPassthroughCopy("./content/nl/feed/pretty-atom-feed.xsl");
@@ -33,12 +37,20 @@ export default async function(eleventyConfig) {
 	// https://www.11ty.dev/docs/watch-serve/#add-your-own-watch-targets
 
 	// Watch images for the image pipeline.
-	eleventyConfig.addWatchTarget("content/**/*.{svg,webp,png,jpg,jpeg,gif}");
+	eleventyConfig.addWatchTarget("./content/**/*.{svg,webp,png,jpg,jpeg,gif}");
 
 	// Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
 	// Adds the {% css %} paired shortcode
 	eleventyConfig.addBundle("css", {
 		toFileDirectory: "dist",
+		transforms: [
+			async function (content) {
+				// type contains the bundle name.
+				let { type, page } = this;
+				let result = await postcss([postcssNested(), tailwindcss()]).process(content, { from: page.inputPath, to: null });
+				return result.css;
+			}
+		]
 	});
 	// Adds the {% js %} paired shortcode
 	eleventyConfig.addBundle("js", {
@@ -46,7 +58,7 @@ export default async function(eleventyConfig) {
 	});
 
 	// Official plugins
-    eleventyConfig.addPlugin(EleventyI18nPlugin, {
+	eleventyConfig.addPlugin(EleventyI18nPlugin, {
 		// any valid BCP 47-compatible language tag is supported
 		defaultLanguage: "en", // Required, this site uses "en"
 
@@ -70,6 +82,7 @@ export default async function(eleventyConfig) {
 	eleventyConfig.addPlugin(pluginNavigation);
 	eleventyConfig.addPlugin(HtmlBasePlugin);
 	eleventyConfig.addPlugin(InputPathToUrlTransformPlugin);
+	eleventyConfig.addPlugin(EleventyRenderPlugin);
 
 	eleventyConfig.addPlugin(feedPlugin, {
 		type: "atom", // or "rss", "json"
@@ -96,7 +109,7 @@ export default async function(eleventyConfig) {
 		}
 	});
 
-    eleventyConfig.addPlugin(feedPlugin, {
+	eleventyConfig.addPlugin(feedPlugin, {
 		type: "atom", // or "rss", "json"
 		outputPath: "/de/feed/feed.xml",
 		stylesheet: "pretty-atom-feed.xsl",
@@ -152,7 +165,7 @@ export default async function(eleventyConfig) {
 	});
 
 
-    eleventyConfig.addPlugin(externalLinks, {'url': 'https://www.deepnest.net'});
+	eleventyConfig.addPlugin(externalLinks, { 'url': 'https://www.deepnest.net' });
 
 	eleventyConfig.addShortcode("currentBuildDate", () => {
 		return (new Date()).toISOString();
@@ -164,7 +177,7 @@ export default async function(eleventyConfig) {
 	// to emulate the file copy on the dev server. Learn more:
 	// https://www.11ty.dev/docs/copy/#emulate-passthrough-copy-during-serve
 
-	// eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
+	eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
 };
 
 export const config = {

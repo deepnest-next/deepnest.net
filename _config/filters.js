@@ -13,18 +13,50 @@ export default function (eleventyConfig) {
         return false
     });
 
-    eleventyConfig.addFilter("jsonDump", (data) => {
-        return JSON.stringify(this, null, "\t");
+    eleventyConfig.addFilter('fileSize', function (bytes, si = false, dp = 1) {
+        const thresh = si ? 1000 : 1024;
+
+        if (Math.abs(bytes) < thresh) {
+            return bytes + ' B';
+        }
+
+        const units = si
+            ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+            : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+        let u = -1;
+        const r = 10 ** dp;
+
+        do {
+            bytes /= thresh;
+            ++u;
+        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+
+
+        return bytes.toFixed(dp) + ' ' + units[u];
     })
 
-    eleventyConfig.addFilter("readableDate", (dateObj, format, zone) => {
+    eleventyConfig.addFilter("jsonDump", (data) => {
+        return JSON.stringify(data, null, "\t");
+    })
+
+    eleventyConfig.addFilter("readableDate", (dateObj, format, zone, lang) => {
         // Formatting tokens for Luxon: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
-        return DateTime.fromJSDate(dateObj, { zone: zone || "utc" }).toFormat(format || "dd LLLL yyyy");
+        return DateTime.fromJSDate(dateObj, { zone: zone || "utc" }).toFormat(format || "dd LLLL yyyy", { locale: lang || "en" });
+    });
+
+    eleventyConfig.addFilter("readableISODate", (dateObj, format, lang) => {
+        // Formatting tokens for Luxon: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
+        return DateTime.fromISO(dateObj).toFormat(format || "dd LLLL yyyy", { locale: lang || "en" });
     });
 
     eleventyConfig.addFilter("htmlDateString", (dateObj) => {
         // dateObj input: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
         return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat('yyyy-LL-dd');
+    });
+
+    eleventyConfig.addFilter("htmlISODateString", (dateObj) => {
+        // dateObj input: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
+        return DateTime.fromISO(dateObj).toFormat('yyyy-LL-dd');
     });
 
     // Get the first `n` elements of a collection.

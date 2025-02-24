@@ -110,7 +110,7 @@
           ]
         },
         {
-          "title":"permalink",
+          "title": "permalink",
           "name": "permalink",
           "type": "slug",
           "default": "/{{lang}}/legal-notice/"
@@ -120,7 +120,10 @@
           "name": "type",
           "type": "string",
           "required": false,
-          "choices": ["page","default"]
+          "choices": [
+            "page",
+            "default"
+          ]
         }
       ]
     }
@@ -133,24 +136,26 @@
       "path": "[[workspace]]/content",
       "defaultLocale": "en",
       "excludeSubdir": true,
-      "previewPath": "post"
+      "previewPath": "global"
     },
     {
       "title": "Content",
       "path": "[[workspace]]/content/en",
       "defaultLocale": "en",
       "excludeSubdir": true,
-      "previewPath": "post"
+      "previewPath": "page"
     },
     {
       "title": "Multilingual",
       "path": "[[workspace]]/docs/en",
       "filePrefix": "",
       "defaultLocale": "en",
+      "previewPath": "docs",
       "locales": [
         {
           "title": "English",
-          "locale": "en"
+          "locale": "en",
+          "path": "."
         },
         {
           "title": "German",
@@ -183,5 +188,43 @@
       "path": "nl"
     }
   ],
-  "frontMatter.website.host": "https://www.deepnest.net"
+  "frontMatter.website.host": "https://www.deepnest.net",
+  "frontMatter.data.types": [
+    {
+      "id": "author",
+      "schema": {
+        "title": "Author",
+        "type": "object",
+        "required": [
+          "name",
+          "url"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "url": {
+            "type": "string",
+            "title": "URL"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          }
+        }
+      }
+    }
+  ],
+  "frontMatter.data.files": [
+    {
+      "id": "authors",
+      "title": "Authors",
+      "file": "[[workspace]]/_data/frontmatters/authors.yaml",
+      "labelField": "name",
+      "singleEntry": false,
+      "type": "author",
+      "fileType": "yaml"
+    }
+  ]
 }

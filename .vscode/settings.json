@@ -1,4 +1,6 @@
 {
-  "editor.formatOnSave": false,
-  "frontMatter.dashboard.openOnStart": true
+  "editor.formatOnSave": true,
+  "frontMatter.dashboard.openOnStart": true,
+  "[markdown]": {
+  }
 }

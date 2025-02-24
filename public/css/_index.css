@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@source "../..";
+@source "..";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+.ofy-hidden {
+    overflow-x: hidden;
+}
