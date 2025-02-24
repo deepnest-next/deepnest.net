@@ -1,13 +1,15 @@
 ---
+title: Releases
 eleventyNavigation:
   key: "release"
   title: "Releases"
   order: 2
 numberOfLatestPostsToShow: 5
 ---
+
 {% set postsCount = githubReleases | length %}
 {% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
-<h1 class="text-3xl font-bold underline">Latest {{ latestPostsCount }} Release{% if latestPostsCount != 1 %}s{% endif %}</h1>
+<h1 class="text-xl font-bold underline">Latest {{ latestPostsCount }} Release{% if latestPostsCount != 1 %}s{% endif %}</h1>
 
 {% set postslist = githubReleases | head(1 * numberOfLatestPostsToShow) %}
 {% set postslistCounter = postsCount %}

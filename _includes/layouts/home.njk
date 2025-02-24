@@ -1,19 +1,20 @@
 ---
 layout: layouts/base.njk
 ---
-<!-- Delete this block, which will also remove the component CSS from the bundle -->
-{%- css %}{% include "public/css/message-box.css" ignore missing %}{% endcss %}
-<div class="message-box">
-	<ol>
-		<li>Edit <code>_data/metadata.js</code> with your blog’s information.</li>
-		<li>(Optional) Edit <code>eleventy.config.js</code> with your <a href="https://www.11ty.dev/docs/config/">configuration preferences</a>.</li>
-		<li>Delete this message from <code>_includes/layouts/home.njk</code>.</li>
-	</ol>
-	<p><em>This is an <a href="https://www.11ty.dev/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.</em></p>
+<div class="py-28">
+	<header>
+		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<h1 class="text-3xl font-bold tracking-tight text-sky-650">{{title}}</h1>
+			{% if subtitle %}<h2 class="text-base font-bold tracking-tight text-sky-650">{{subtitle}}</h2>{% endif %}
+		</div>
+	</header>
+	<main>
+		<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 isolate" id="skip">
+			{%- if page.eleventyNavigation.key == "Home" -%}
+				{% include "../test.njk" %}
+			{%- else -%}
+				{{ content | safe }}
+			{%- endif -%}
+		</div>
+	</main>
 </div>
-<!-- Stop deleting -->
-<code><pre>
-{{ githubRepos | jsonDump }}
-{{ githubReleases | jsonDump }}
-</pre></code>
-{{ content | safe }}

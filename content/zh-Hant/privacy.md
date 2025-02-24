@@ -1,5 +1,4 @@
 ---
-title: Datenschutzerklärung
 slugOverride: datenschutz
 eleventyNavigation:
   key: privacy
@@ -7,7 +6,6 @@ eleventyNavigation:
   title: Datenschutz
   order: 3
 ---
-
-# Datenschutzerklärung
+# Datenschutz
 
 I am a person that writes stuff.

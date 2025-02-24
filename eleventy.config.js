@@ -6,6 +6,9 @@ import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 import pluginFilters from "./_config/filters.js";
 
+// TODO: later
+//import { fullwindcss } from "fullwindcss";
+
 // Community Plugins
 import externalLinks from "@aloskutov/eleventy-plugin-external-links";
 import postcss from "postcss";
@@ -26,8 +29,7 @@ export default async function (eleventyConfig) {
 	// For example, `./public/css/` ends up in `_site/css/`
 	eleventyConfig
 		.addPassthroughCopy({
-			"./public/": "/",
-			"./public/img/": "/img/"
+			"./public/": "/"
 		}, {})
 		.addPassthroughCopy("./content/en/feed/pretty-atom-feed.xsl")
 		.addPassthroughCopy("./content/de/feed/pretty-atom-feed.xsl")
@@ -37,7 +39,7 @@ export default async function (eleventyConfig) {
 	// https://www.11ty.dev/docs/watch-serve/#add-your-own-watch-targets
 
 	// Watch images for the image pipeline.
-	eleventyConfig.addWatchTarget("./content/**/*.{svg,webp,png,jpg,jpeg,gif}");
+	eleventyConfig.addWatchTarget("./{content,public}/**/*.{svg,webp,png,jpg,jpeg,gif}");
 
 	// Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
 	// Adds the {% css %} paired shortcode
@@ -47,7 +49,7 @@ export default async function (eleventyConfig) {
 			async function (content) {
 				// type contains the bundle name.
 				let { type, page } = this;
-				let result = await postcss([postcssNested(), tailwindcss()]).process(content, { from: page.inputPath, to: null });
+				let result = await postcss([postcssNested(), tailwindcss()/*TODO: later, fullwindcss*/]).process(content, { from: page.inputPath, to: null });
 				return result.css;
 			}
 		]
@@ -95,7 +97,7 @@ export default async function (eleventyConfig) {
 			}
 		},
 		collection: {
-			name: "posts",
+			name: "blog_en",
 			limit: 10,
 		},
 		metadata: {
@@ -120,7 +122,7 @@ export default async function (eleventyConfig) {
 			}
 		},
 		collection: {
-			name: "de",
+			name: "blog_de",
 			limit: 10,
 		},
 		metadata: {

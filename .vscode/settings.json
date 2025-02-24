@@ -1,6 +1,13 @@
 {
-  "editor.formatOnSave": true,
-  "frontMatter.dashboard.openOnStart": true,
-  "[markdown]": {
-  }
+	"editor.formatOnSave": true,
+	"files.trimTrailingWhitespace": true,
+	"[markdown]": {},
+	"emmet.includeLanguages": {
+		"md": "html",
+		"nunjucks": "html"
+	},
+	"emmet.syntaxProfiles": {
+		"md": "html",
+		"nunjucks": "html"
+	}
 }

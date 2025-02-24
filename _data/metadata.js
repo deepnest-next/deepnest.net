@@ -1,11 +1,12 @@
 export default {
-	title: "Eleventy Base Blog v9",
-	url: "https://example.com/",
+	debug: false,
+	title: "deepnest-next",
+	url: "https://www.deepnest.net/",
 	language: "en",
 	description: "I am writing about my experiences as a naval navel-gazer.",
 	author: {
-		name: "Your Name Here",
-		email: "youremailaddress@example.com",
-		url: "https://example.com/about-me/"
+		name: "Josef Fröhle",
+		email: "dexus@deepnest.net",
+		url: "https://www.josef-froehle.de/"
 	}
 }

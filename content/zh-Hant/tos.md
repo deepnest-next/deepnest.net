@@ -1,5 +1,4 @@
 ---
-title: Nutzungs- und Geschäftsbedingungen
 slugOverride: Nutzungs- und Geschäftsbedingungen
 eleventyNavigation:
   key: tos
@@ -7,7 +6,6 @@ eleventyNavigation:
   title: Nutzungs- und Geschäftsbedingungen
   order: 3
 ---
-
 # Nutzungs- und Geschäftsbedingungen
 
 I am a person that writes stuff.

@@ -1,230 +1,266 @@
 {
-  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
-  "frontMatter.taxonomy.contentTypes": [
-    {
-      "name": "default",
-      "previewPath": null,
-      "pageBundle": false,
-      "fields": [
-        {
-          "title": "Title",
-          "name": "title",
-          "type": "string"
-        },
-        {
-          "title": "Description",
-          "name": "description",
-          "type": "string"
-        },
-        {
-          "title": "Publishing date",
-          "name": "date",
-          "type": "datetime",
-          "default": "{{now}}",
-          "isPublishDate": true
-        },
-        {
-          "title": "Article preview",
-          "name": "preview",
-          "type": "image"
-        },
-        {
-          "title": "Is in draft",
-          "name": "draft",
-          "type": "draft"
-        },
-        {
-          "title": "Tags",
-          "name": "tags",
-          "type": "tags"
-        },
-        {
-          "title": "Categories",
-          "name": "categories",
-          "type": "categories"
-        }
-      ]
-    },
-    {
-      "name": "page",
-      "previewPath": null,
-      "pageBundle": false,
-      "fields": [
-        {
-          "title": "Title",
-          "name": "title",
-          "type": "string"
-        },
-        {
-          "title": "Description",
-          "name": "description",
-          "type": "string"
-        },
-        {
-          "title": "Publishing date",
-          "name": "date",
-          "type": "datetime",
-          "default": "{{now}}",
-          "isPublishDate": true
-        },
-        {
-          "title": "Article preview",
-          "name": "preview",
-          "type": "image"
-        },
-        {
-          "title": "Is in draft",
-          "name": "draft",
-          "type": "draft"
-        },
-        {
-          "title": "Tags",
-          "name": "tags",
-          "type": "tags"
-        },
-        {
-          "title": "Categories",
-          "name": "categories",
-          "type": "categories"
-        },
-        {
-          "title": "eleventyNavigation",
-          "name": "eleventyNavigation",
-          "type": "fields",
-          "fields": [
-            {
-              "title": "key",
-              "name": "key",
-              "type": "string"
-            },
-            {
-              "title": "title",
-              "name": "title",
-              "type": "string"
-            },
-            {
-              "title": "order",
-              "name": "order",
-              "type": "number"
-            }
-          ]
-        },
-        {
-          "title": "permalink",
-          "name": "permalink",
-          "type": "slug",
-          "default": "/{{lang}}/legal-notice/"
-        },
-        {
-          "title": "type",
-          "name": "type",
-          "type": "string",
-          "required": false,
-          "choices": [
-            "page",
-            "default"
-          ]
-        }
-      ]
-    }
-  ],
-  "frontMatter.framework.id": "11ty",
-  "frontMatter.preview.host": "http://localhost:8080",
-  "frontMatter.content.pageFolders": [
-    {
-      "title": "GlobalPages",
-      "path": "[[workspace]]/content",
-      "defaultLocale": "en",
-      "excludeSubdir": true,
-      "previewPath": "global"
-    },
-    {
-      "title": "Content",
-      "path": "[[workspace]]/content/en",
-      "defaultLocale": "en",
-      "excludeSubdir": true,
-      "previewPath": "page"
-    },
-    {
-      "title": "Multilingual",
-      "path": "[[workspace]]/docs/en",
-      "filePrefix": "",
-      "defaultLocale": "en",
-      "previewPath": "docs",
-      "locales": [
-        {
-          "title": "English",
-          "locale": "en",
-          "path": "."
-        },
-        {
-          "title": "German",
-          "locale": "de",
-          "path": "../de"
-        },
-        {
-          "title": "Nederlands",
-          "locale": "nl",
-          "path": "../nl"
-        }
-      ]
-    }
-  ],
-  "frontMatter.git.enabled": true,
-  "frontMatter.content.i18n": [
-    {
-      "title": "English",
-      "locale": "en",
-      "path": "en"
-    },
-    {
-      "title": "German",
-      "locale": "de",
-      "path": "de"
-    },
-    {
-      "title": "Dutch",
-      "locale": "nl",
-      "path": "nl"
-    }
-  ],
-  "frontMatter.website.host": "https://www.deepnest.net",
-  "frontMatter.data.types": [
-    {
-      "id": "author",
-      "schema": {
-        "title": "Author",
-        "type": "object",
-        "required": [
-          "name",
-          "url"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "title": "Name"
-          },
-          "url": {
-            "type": "string",
-            "title": "URL"
-          },
-          "description": {
-            "type": "string",
-            "title": "Description"
-          }
-        }
-      }
-    }
-  ],
-  "frontMatter.data.files": [
-    {
-      "id": "authors",
-      "title": "Authors",
-      "file": "[[workspace]]/_data/frontmatters/authors.yaml",
-      "labelField": "name",
-      "singleEntry": false,
-      "type": "author",
-      "fileType": "yaml"
-    }
-  ]
+	"$schema": "https://frontmatter.codes/frontmatter.schema.json",
+	"frontMatter.taxonomy.contentTypes": [
+		{
+			"name": "default",
+			"previewPath": null,
+			"pageBundle": false,
+			"fields": [
+				{
+					"title": "Title",
+					"name": "title",
+					"type": "string"
+				},
+				{
+					"title": "Description",
+					"name": "description",
+					"type": "string"
+				},
+				{
+					"title": "Publishing date",
+					"name": "date",
+					"type": "datetime",
+					"default": "{{now}}",
+					"isPublishDate": true
+				},
+				{
+					"title": "Article preview",
+					"name": "preview",
+					"type": "image"
+				},
+				{
+					"title": "Is in draft",
+					"name": "draft",
+					"type": "draft"
+				},
+				{
+					"title": "Tags",
+					"name": "tags",
+					"type": "tags"
+				},
+				{
+					"title": "Categories",
+					"name": "categories",
+					"type": "categories"
+				}
+			]
+		},
+		{
+			"name": "page",
+			"previewPath": null,
+			"pageBundle": false,
+			"fields": [
+				{
+					"title": "Title",
+					"name": "title",
+					"type": "string"
+				},
+				{
+					"title": "Description",
+					"name": "description",
+					"type": "string"
+				},
+				{
+					"title": "Publishing date",
+					"name": "date",
+					"type": "datetime",
+					"default": "{{now}}",
+					"isPublishDate": true
+				},
+				{
+					"title": "Article preview",
+					"name": "preview",
+					"type": "image"
+				},
+				{
+					"title": "Is in draft",
+					"name": "draft",
+					"type": "draft"
+				},
+				{
+					"title": "Tags",
+					"name": "tags",
+					"type": "tags"
+				},
+				{
+					"title": "Categories",
+					"name": "categories",
+					"type": "categories"
+				},
+				{
+					"title": "eleventyNavigation",
+					"name": "eleventyNavigation",
+					"type": "fields",
+					"fields": [
+						{
+							"title": "key",
+							"name": "key",
+							"type": "string"
+						},
+						{
+							"title": "title",
+							"name": "title",
+							"type": "string"
+						},
+						{
+							"title": "order",
+							"name": "order",
+							"type": "number"
+						}
+					]
+				},
+				{
+					"title": "permalink",
+					"name": "permalink",
+					"type": "slug",
+					"default": "/{{lang}}/legal-notice/"
+				},
+				{
+					"title": "type",
+					"name": "type",
+					"type": "string",
+					"required": false,
+					"choices": ["page", "default"]
+				}
+			]
+		}
+	],
+	"frontMatter.framework.id": "11ty",
+	"frontMatter.preview.host": "http://localhost:8090",
+	"frontMatter.content.pageFolders": [
+		{
+			"title": "GlobalPages",
+			"path": "[[workspace]]/content",
+			"defaultLocale": "en",
+			"excludeSubdir": true,
+			"previewPath": "global"
+		},
+		{
+			"title": "Content",
+			"path": "[[workspace]]/content/en",
+			"defaultLocale": "en",
+			"excludeSubdir": true,
+			"previewPath": "page",
+			"locales": [
+				{
+					"title": "English",
+					"locale": "en",
+					"path": "."
+				},
+				{
+					"title": "German",
+					"locale": "de",
+					"path": "../de"
+				},
+				{
+					"title": "Nederlands",
+					"locale": "nl",
+					"path": "../nl"
+				}
+			]
+		},
+		{
+			"title": "Docs",
+			"path": "[[workspace]]/content/en/docs",
+			"filePrefix": "",
+			"defaultLocale": "en",
+			"previewPath": "docs",
+			"locales": [
+				{
+					"title": "English",
+					"locale": "en",
+					"path": "."
+				},
+				{
+					"title": "German",
+					"locale": "de",
+					"path": "../../de/docs"
+				},
+				{
+					"title": "Nederlands",
+					"locale": "nl",
+					"path": "../../nl/docs"
+				}
+			]
+		},
+		{
+			"title": "Blog",
+			"path": "[[workspace]]/content/en/blog",
+			"filePrefix": "",
+			"defaultLocale": "en",
+			"previewPath": "blog",
+			"locales": [
+				{
+					"title": "English",
+					"locale": "en",
+					"path": "."
+				},
+				{
+					"title": "German",
+					"locale": "de",
+					"path": "../../de/docs"
+				},
+				{
+					"title": "Nederlands",
+					"locale": "nl",
+					"path": "../../nl/docs"
+				}
+			]
+		}
+	],
+	"frontMatter.git.enabled": true,
+	"frontMatter.content.i18n": [
+		{
+			"title": "English",
+			"locale": "en",
+			"path": "en"
+		},
+		{
+			"title": "German",
+			"locale": "de",
+			"path": "de"
+		},
+		{
+			"title": "Dutch",
+			"locale": "nl",
+			"path": "nl"
+		}
+	],
+	"frontMatter.website.host": "https://www.deepnest.net",
+	"frontMatter.data.types": [
+		{
+			"id": "author",
+			"schema": {
+				"title": "Author",
+				"type": "object",
+				"required": ["name", "url"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"title": "Name"
+					},
+					"url": {
+						"type": "string",
+						"title": "URL"
+					},
+					"description": {
+						"type": "string",
+						"title": "Description"
+					}
+				}
+			}
+		}
+	],
+	"frontMatter.data.files": [
+		{
+			"id": "authors",
+			"title": "Authors",
+			"file": "[[workspace]]/_data/frontmatters/authors.yaml",
+			"labelField": "name",
+			"singleEntry": false,
+			"type": "author",
+			"fileType": "yaml"
+		}
+	],
+	"frontMatter.dashboard.openOnStart": true
 }
