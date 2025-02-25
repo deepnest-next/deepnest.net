@@ -3,7 +3,7 @@ title: Über uns
 eleventyNavigation:
   key: about
   title: Über uns
-  order: 3
+  order: 200
 slugOverride: ueber-uns
 ---
 

@@ -4,7 +4,7 @@ slugOverride: impressum
 eleventyNavigation:
   key: "Imprint"
   title: Impressum
-  order: 3
+  order: 900
 ---
 
 # Impressum

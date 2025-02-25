@@ -1,5 +1,6 @@
 export default {
 	lang: "zh-Hant",
+	draft: true,
 	permalink: function (data) {
 		// Slug override for localized URL slugs
 		if (data.slugOverride) {

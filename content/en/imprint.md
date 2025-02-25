@@ -1,5 +1,5 @@
 ---
-permalink: /{{lang}}/legal-notice/
+slugOverride: legal-notice
 eleventyNavigation:
   key: Imprint
   title: Imprint

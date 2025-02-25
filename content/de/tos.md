@@ -5,7 +5,7 @@ eleventyNavigation:
   key: tos
   parent: imprint
   title: Nutzungs- und Geschäftsbedingungen
-  order: 3
+  order: 920
 ---
 
 # Nutzungs- und Geschäftsbedingungen

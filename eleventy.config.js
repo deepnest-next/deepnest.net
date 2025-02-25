@@ -44,7 +44,7 @@ export default async function (eleventyConfig) {
 	// Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
 	// Adds the {% css %} paired shortcode
 	eleventyConfig.addBundle("css", {
-		toFileDirectory: "dist",
+		toFileDirectory: "css/gen",
 		transforms: [
 			async function (content) {
 				// type contains the bundle name.
@@ -56,7 +56,7 @@ export default async function (eleventyConfig) {
 	});
 	// Adds the {% js %} paired shortcode
 	eleventyConfig.addBundle("js", {
-		toFileDirectory: "dist",
+		toFileDirectory: "js/gen",
 	});
 
 	// Official plugins

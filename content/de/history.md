@@ -9,7 +9,7 @@ categories: []
 eleventyNavigation:
   key: "history"
   title: Historie
-  order: 5
+  order: 500
 slugOverride: Historie
 ---
 # Historie

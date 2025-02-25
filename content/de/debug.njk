@@ -1,0 +1,29 @@
+---
+title: "Debug"
+draft: true
+eleventyNavigation:
+  key: "Debug"
+  order: 1
+numberOfLatestPostsToShow: 3
+---
+
+<h1>ENV</h1>
+<pre><code>
+	{{- env | jsonDump -}}
+</code></pre>
+<h1>pkg</h1>
+<pre><code>
+	{{- pkg | jsonDump -}}
+</code></pre>
+<h1>pagination</h1>
+<pre><code>
+	{{- pagination | jsonDump -}}
+</code></pre>
+<h1>page</h1>
+<pre><code>
+	{{- page | jsonDump -}}
+</code></pre>
+<h1>eleventy</h1>
+<pre><code>
+{{- eleventy | jsonDump -}}
+</code></pre>

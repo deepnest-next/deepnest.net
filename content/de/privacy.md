@@ -5,7 +5,7 @@ eleventyNavigation:
   key: privacy
   parent: imprint
   title: Datenschutz
-  order: 3
+  order: 910
 ---
 
 # Datenschutzerklärung

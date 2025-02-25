@@ -1,10 +1,17 @@
-<footer class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+<footer class="mx-auto pb-8 max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
 	{% include "components/darkmode_toggle2.njk" %}
-	<p class="pb-1">Also available translation: {% for link in page.url | locale_links -%}
-		{%- if not loop.first %}, {% endif %}
-		<a href="{{link.url}}" lang="{{link.lang}}" hreflang="{{link.lang}}">{{link.lang | localeName}}</a>
-	{%- endfor %}</p>
-	<hr class="h-px my-2 bg-gray-300 border-0 dark:bg-gray-600">
-	<p class="pb-1 text-sm"><a href="{{ "/en/legal-notice/" | locale_url(page.lang) }}">Impressum</a> &bull; <a href="{{ "/en/privacy/" | locale_url(page.lang) }}">Datenschutz</a> &bull; <a href="{{ "/en/tos/" | locale_url(page.lang) }}">Nutzungs und Geschäftsbedingungen</a></p>
-	<p class="pb-1 text-xs"><em>Built with <a href="https://www.11ty.dev/">{{ eleventy.generator }}</a></em></p>
+	<div class="relative flex-none">
+		<p class="pb-1">Also available translation: {% for link in page.url | locale_links -%}
+				{%- if not loop.first %}, {% endif %}
+				<a href="{{link.url}}" lang="{{link.lang}}" hreflang="{{link.lang}}">{{link.lang | localeName}}</a>
+			{%- endfor %}
+		</p>
+		<hr class="h-px my-2 bg-gray-300 border-0 dark:bg-gray-600">
+		<p class="pb-1 text-sm">
+			<a href="{{ "/en/legal-notice/" | locale_url(page.lang) }}">Impressum</a> &bull; <a href="{{ "/en/privacy/" | locale_url(page.lang) }}">Datenschutz</a> &bull; <a href="{{ "/en/tos/" | locale_url(page.lang) }}">Nutzungs und Geschäftsbedingungen</a>
+		</p>
+		<p class="pb-1 text-xs">
+			<em>Built with <a href="https://www.11ty.dev/">{{ eleventy.generator }}</a>
+			</em> &bull; &copy; 2024-{{ dnHelpers.currentYear() }} deepnest-next. All rights reserved.</p>
+	</div>
 </footer>

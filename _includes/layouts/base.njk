@@ -1,31 +1,31 @@
 <!doctype html>
 <html lang="{{ metadata.language }}" class="h-full"
-	x-data="{darkMode: localStorage.getItem('darkMode')	|| localStorage.setItem('darkMode', 'system')}"
+	x-data="{darkMode: localStorage.getItem('darkMode')	|| localStorage.setItem('darkMode', 'system'), mobilemenu: false}"
 	x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))"
 	x-bind:class="{'dark': darkMode === 'dark' || (darkMode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}">
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>{{ title or metadata.title }}</title>
-	<meta name="description" content="{{ description or metadata.description }}">
-	<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>{{ title or metadata.title }}</title>
+		<meta name="description" content="{{ description or metadata.description }}">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
 
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link rel="manifest" href="/site.webmanifest">
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
 
-	<link rel="alternate" hreflang="{{lang}}" href="{{page.url}}">
-	{% for link in page.url | locale_links %}
-	<link rel="alternate" hreflang="{{link.lang}}" href="https://www.11ty.dev{{link.url}}">
-	{% endfor %}
+		<link rel="alternate" hreflang="{{lang}}" href="{{page.url}}">
+		{% for link in page.url | locale_links %}
+			<link rel="alternate" hreflang="{{link.lang}}" href="https://www.11ty.dev{{link.url}}">
+		{% endfor %}
 
-	{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site! #}
-	{#-
+		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site! #}
+		{#-
 	<meta name="generator" content="{{ eleventy.generator }}"> #}
 
-	{#-
+		{#-
 	Plain-text bundles are provided via the `eleventy-plugin-bundle` plugin:
 	1. CSS:
 	* Add to a per-page bundle using `{% css %}{% endcss %}`
@@ -36,46 +36,86 @@
 	3. Learn more: https://github.com/11ty/eleventy-plugin-bundle
 	#}
 
-	{#- Add an arbitrary string to the bundle #}
-	{%- css %}/* This is an arbitrary CSS string added to the bundle */
-	@reference "tailwindcss";
-	{% endcss %}
-	{#- Add the contents of a file to the bundle #}
-	{#%- css %}{% include "_site/css/index.css" ignore missing %}{% endcss %#}
+		{#- Add an arbitrary string to the bundle #}
+		{% if draft and env.ELEVENTY_RUN_MODE != 'build' %}
+			{%- css %}/* This is an arbitrary CSS string added to the bundle */
+@reference "tailwindcss";
 
-	{#- Or you can add from node_modules #}
-	{# {%- css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %} #}
+.draft {
+  position: relative;
+  overflow: hidden;
+}
 
-	{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}
-	{# <style>
+.draft::before {
+  position: absolute;
+  {#/*top: -500%;*/#}
+  left: -500%;
+
+  display: block;
+  width: 1000vw;
+  height: 1000vh;
+
+  transform: rotate(-45deg);
+  content: attr(data-watermark);
+
+  opacity: 0.10;
+  line-height: 2em;
+  letter-spacing: 2px;
+  color: #999;
+	font-size: 2.75rem;
+	z-index: 0
+}
+		{% endcss %}
+
+			{%- js %}
+document.querySelectorAll('.draft').forEach(function(el) {
+  el.dataset.watermark = ('   '+ el.dataset.watermark + '   ').repeat(20000);
+});
+			{% endjs %}
+		{% endif %}
+		{#- Add the contents of a file to the bundle #}
+		{#%- css %}{% include "_site/css/index.css" ignore missing %}{% endcss %#}
+
+		{#- Or you can add from node_modules #}
+		{# {%- css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %} #}
+
+		{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}
+		{# <style>
 		{
 			% getBundle "css" %
 		}
 	</style> #}
-	{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
-	<link rel="stylesheet" href="/css/index.css">
-	<link rel="stylesheet" href="{% getBundleFileUrl 'css' %}">
+		{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
+		<link rel="stylesheet" href="/css/index.css">
+		<link rel="stylesheet" href="{% getBundleFileUrl 'css' %}">
 
-	{#- Add the heading-anchors web component to the JavaScript bundle #}
-	{%- js %}{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}{% endjs %}
-	{%- js defer %}{% include "node_modules/alpinejs/dist/cdn.js" %}{% endjs %}
-	<script defer src="{% getBundleFileUrl 'js', 'defer' %}"></script>
-</head>
+		{#- Add the heading-anchors web component to the JavaScript bundle #}
+		{%- js %}{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}{% endjs %}
+		{%- js defer %}{% include "node_modules/alpinejs/dist/cdn.js" %}{% endjs %}
+		<script defer src="{% getBundleFileUrl 'js', 'defer' %}"></script>
+	</head>
 
-<body class="ofy-hidden h-screen max-w-screen">
-	<a href="#skip" class="sr-only">Skip to main content</a>
-	<div class="bg-white dark:bg-neutral-950 min-h-full">
+	<body class="ofy-hidden h-screen max-w-screen">
+		<a href="#skip" class="sr-only">Skip to main content</a>
+		<div class="bg-white dark:bg-neutral-950 min-h-screen">
+			{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
+				{%set draftClass = "draft" %}
+				<div class="draft min-h-screen"  data-watermark="DRAFT WORK IN PROGRESS">
+				{% endif -%}
 
-		{% include "../header_menu.njk" %}
+				{% include "../header_menu.njk" %}
 
-		<heading-anchors>
-			{{ content | safe }}
-		</heading-anchors>
+				<heading-anchors>
+					{{ content | safe }}
+				</heading-anchors>
 
-		{% include "../footer.njk" %}
-	</div>
-	<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
-	<script type="module" src="{% getBundleFileUrl 'js' %}"></script>
-</body>
+				{% include "../footer.njk" %}
+				{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
+				</div>
+			{% endif -%}
+		</div>
+		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
+		<script type="module" src="{% getBundleFileUrl 'js' %}"></script>
+	</body>
 
 </html>
