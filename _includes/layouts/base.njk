@@ -35,10 +35,15 @@
 	* Retrieve via `{% getBundle "js" %}` or `{% getBundleFileUrl "js" %}`
 	3. Learn more: https://github.com/11ty/eleventy-plugin-bundle
 	#}
-
+	{%- css %}
+	@reference "tailwindcss";
+	html.dark {
+		@apply bg-neutral-950;
+	}
+	{% endcss -%}
 		{#- Add an arbitrary string to the bundle #}
-		{% if draft and env.ELEVENTY_RUN_MODE != 'build' %}
-			{%- css %}/* This is an arbitrary CSS string added to the bundle */
+		{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
+			{%- css 'draft' %}/* This is an arbitrary CSS string added to the bundle */
 @reference "tailwindcss";
 
 .draft {
@@ -65,14 +70,17 @@
 	font-size: 2.75rem;
 	z-index: 0
 }
-		{% endcss %}
+html.dark {
+	@apply bg-neutral-950;
+}
+		{% endcss -%}
 
 			{%- js %}
 document.querySelectorAll('.draft').forEach(function(el) {
   el.dataset.watermark = ('   '+ el.dataset.watermark + '   ').repeat(20000);
 });
-			{% endjs %}
-		{% endif %}
+			{% endjs -%}
+		{% endif -%}
 		{#- Add the contents of a file to the bundle #}
 		{#%- css %}{% include "_site/css/index.css" ignore missing %}{% endcss %#}
 
@@ -80,14 +88,17 @@ document.querySelectorAll('.draft').forEach(function(el) {
 		{# {%- css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %} #}
 
 		{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}
-		{# <style>
-		{
-			% getBundle "css" %
-		}
-	</style> #}
-		{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
+
 		<link rel="stylesheet" href="/css/index.css">
-		<link rel="stylesheet" href="{% getBundleFileUrl 'css' %}">
+				{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
+
+		<style>
+			{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
+				{%- getBundle "css", 'draft' -%}
+			{% endif %}
+			{%- getBundle "css" -%}
+		</style>
+		{#<link rel="stylesheet" href="{% getBundleFileUrl 'css' %}">#}
 
 		{#- Add the heading-anchors web component to the JavaScript bundle #}
 		{%- js %}{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}{% endjs %}
@@ -95,7 +106,12 @@ document.querySelectorAll('.draft').forEach(function(el) {
 		<script defer src="{% getBundleFileUrl 'js', 'defer' %}"></script>
 	</head>
 
-	<body class="ofy-hidden h-screen max-w-screen">
+	<body class="ofy-hidden h-screen max-w-screen [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:bg-sky-200
+  [&::-webkit-scrollbar-thumb]:bg-sky-500
+  dark:[&::-webkit-scrollbar-track]:bg-sky-700
+  dark:[&::-webkit-scrollbar-thumb]:bg-sky-500
+	text-black dark:text-gray-100">
 		<a href="#skip" class="sr-only">Skip to main content</a>
 		<div class="bg-white dark:bg-neutral-950 min-h-screen">
 			{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}

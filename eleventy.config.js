@@ -3,6 +3,18 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import automaticNoopener from 'eleventy-plugin-automatic-noopener';
+import addRemoteData from "@aaashur/eleventy-plugin-add-remote-data";
+/*
+import intlUtils from '@pcdevil/eleventy-plugin-intl-utils';
+const intlUtilConfig = {
+		locale: 'en-GB',
+};
+eleventyConfig.addPlugin(intlUtils, intlUtilConfig);
+*/
+import editOnGithub from 'eleventy-plugin-edit-on-github';
+import embeds from "eleventy-plugin-embed-everything";
+import footnotes from 'eleventy-plugin-footnotes';
 
 import pluginFilters from "./_config/filters.js";
 
@@ -25,6 +37,11 @@ export default async function (eleventyConfig) {
 		}
 	});
 
+	eleventyConfig.setChokidarConfig({
+		usePolling: true,
+		interval: 500,
+	});
+
 	// Copy the contents of the `public` folder to the output folder
 	// For example, `./public/css/` ends up in `_site/css/`
 	eleventyConfig
@@ -45,6 +62,7 @@ export default async function (eleventyConfig) {
 	// Adds the {% css %} paired shortcode
 	eleventyConfig.addBundle("css", {
 		toFileDirectory: "css/gen",
+		hoist: true,
 		transforms: [
 			async function (content) {
 				// type contains the bundle name.
@@ -85,6 +103,27 @@ export default async function (eleventyConfig) {
 	eleventyConfig.addPlugin(HtmlBasePlugin);
 	eleventyConfig.addPlugin(InputPathToUrlTransformPlugin);
 	eleventyConfig.addPlugin(EleventyRenderPlugin);
+	eleventyConfig.addPlugin(automaticNoopener);
+	eleventyConfig.addPlugin(addRemoteData, {
+		data: {
+			robots: "https://api.ashur.cab/robots/v2.json"
+		},
+	});
+	eleventyConfig.addPlugin(editOnGithub, {
+		// required
+		github_edit_repo: 'https://github.com/deepnest-next/deepnest.net',
+		// optional: defaults
+		github_edit_path: undefined, // non-root location in git url. root is assumed
+		github_edit_branch: 'devel',
+		github_edit_text: 'Edit on Github', // html accepted, or javascript function: (page) => { return page.inputPath}
+		github_edit_class: 'edit-on-github',
+		github_edit_tag: 'a',
+		github_edit_attributes: 'target="_blank" rel="noopener"',
+		github_edit_wrapper: undefined, //ex: "<div stuff>${edit_on_github}</div>"
+	});
+	eleventyConfig.addPlugin(embeds);
+	eleventyConfig.addPlugin(footnotes, { title: "Footnotes" /* TODO: fork and make multilingual … */ })
+
 
 	eleventyConfig.addPlugin(feedPlugin, {
 		type: "atom", // or "rss", "json"

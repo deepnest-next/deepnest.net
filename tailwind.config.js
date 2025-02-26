@@ -1,8 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 import { fullwindcss } from "fullwindcss";
 module.exports = {
+	darkMode: "class",
 	content: [
-		"./**/*.{html,njk}"
+		"./includes/*.{html,njk}",
+		"./content/*.{html,md,liquid,njk}"
 	],
 	plugins: [
 		fullwindcss,

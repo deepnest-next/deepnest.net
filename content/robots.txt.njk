@@ -1,0 +1,8 @@
+---
+permalink: /robots.txt
+---
+{%- for robot in robots.disallow -%}
+User-agent: {{ robot }}
+Disallow: /
+
+{% endfor -%}

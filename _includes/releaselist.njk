@@ -1,134 +1,142 @@
-{%- css %}.postlist { counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }} }
-@reference "tailwindcss";
-.markdown {
-  @apply text-gray-900 leading-normal break-words;
-}
+{%- css 'mypage' %}
+/*! build | {{ unixtime() }} */
+{% raw %}
+@reference "../../public/css/_index.css";
+.postlist { counter-reset: start-from {% endraw %}{{ (postslistCounter or postslist.length) + 1 }} {% raw %}}
 
-.markdown > * + * {
-  @apply mt-0 mb-4;
-}
+	.markdown{
+		@apply leading-normal break-words text-base text-gray-900 dark:text-neutral-100;
+	}
 
-.markdown li + li {
-  @apply mt-1;
-}
+	.markdown > * + * {
+		@apply mt-0 mb-4;
 
-.markdown li > p + p {
-  @apply mt-6;
-}
+	}
 
-.markdown strong {
-  @apply font-semibold;
-}
+	.markdown li + li {
+		@apply mt-1;
+	}
 
-.markdown a {
-  @apply text-blue-600 font-semibold;
-}
+	.markdown li > p + p {
+		@apply mt-6;
+	}
 
-.markdown strong a {
-  @apply font-bold;
-}
+	.markdown strong {
+		@apply font-semibold;
+	}
 
-.markdown h1 {
-  @apply leading-tight border-b text-4xl font-semibold mb-4 mt-6 pb-2;
-}
+	.markdown a {
+		@apply text-sky-500 font-semibold;
+	}
 
-.markdown h2 {
-  @apply leading-tight border-b text-2xl font-semibold mb-4 mt-6 pb-2;
-}
+	.markdown strong a {
+		@apply font-bold;
+	}
 
-.markdown h3 {
-  @apply leading-snug text-lg font-semibold mb-4 mt-6;
-}
+	.markdown h1 {
+		@apply leading-tight border-b text-4xl font-semibold mb-4 mt-6 pb-2;
+	}
 
-.markdown h4 {
-  @apply leading-none text-base font-semibold mb-4 mt-6;
-}
+	.markdown h2 {
+		@apply leading-tight border-b text-2xl font-semibold mb-4 mt-6 pb-2;
+	}
 
-.markdown h5 {
-  @apply leading-tight text-sm font-semibold mb-4 mt-6;
-}
+	.markdown h3 {
+		@apply leading-snug text-lg font-semibold mb-4 mt-6;
+	}
 
-.markdown h6 {
-  @apply leading-tight text-sm font-semibold text-gray-600 mb-4 mt-6;
-}
+	.markdown h4 {
+		@apply leading-none text-base font-semibold mb-4 mt-6;
+	}
 
-.markdown blockquote {
-  @apply text-base border-l-4 border-gray-300 pl-4 pr-4 text-gray-600;
-}
+	.markdown h5 {
+		@apply leading-tight text-sm font-semibold mb-4 mt-6;
+	}
 
-.markdown code {
-  @apply font-mono text-sm inline bg-gray-200 rounded px-1 py-1;
-}
+	.markdown h6 {
+		@apply leading-tight text-sm font-semibold text-gray-600 dark:text-gray-300 mb-4 mt-6;
+	}
 
-.markdown pre {
-  @apply bg-gray-100 rounded p-4;
-}
+	.markdown blockquote {
+		@apply text-base border-l-4 border-gray-300 pl-4 pr-4 text-gray-600 dark:text-gray-300;
+	}
 
-.markdown pre code {
-  @apply block bg-transparent p-0 overflow-visible rounded-none;
-}
+	.markdown code {
+		@apply font-mono text-sm inline bg-gray-200 dark:text-gray-100 rounded px-1 py-1;
+	}
 
-.markdown ul {
-  @apply text-base pl-8 list-disc;
-}
+	.markdown pre {
+		@apply bg-gray-100 rounded p-4;
+	}
 
-.markdown ol {
-  @apply text-base pl-8 list-decimal;
-}
+	.markdown pre code {
+		@apply block bg-transparent p-0 overflow-visible rounded-none;
+	}
 
-.markdown kbd {
-  @apply text-xs inline-block rounded border px-1 py-5 align-middle font-normal font-mono shadow;
-}
+	.markdown ul {
+		@apply text-base pl-8 pb-4 list-disc;
+	}
 
-.markdown table {
-  @apply text-base border-gray-600;
-}
+	.markdown ol {
+		@apply text-base pl-8 pb-4 list-decimal;
+	}
 
-.markdown th {
-  @apply border py-1 px-3;
-}
+	.markdown kbd {
+		@apply text-base inline-block rounded border px-1 py-5 align-middle font-normal font-mono shadow;
+	}
 
-.markdown td {
-  @apply border py-1 px-3;
-}
+	.markdown table {
+		@apply text-base border-gray-600;
+	}
 
-/* Override pygments style background color. */
-.markdown .highlight pre {
-  @apply bg-gray-100;
-}{% endcss %}
+	.markdown th {
+		@apply border py-1 px-3;
+	}
+
+	.markdown td {
+		@apply border py-1 px-3;
+	}
+
+	/* Override pygments style background color. */
+	.markdown .highlight pre {
+		@apply bg-gray-100 dark:bg-gray-900;
+	}
+
+{% endraw %}
+{% endcss %}
 
 {%- for post in postslist %}
 	<div class="mt-6 mb-12">
 		<div class="px-4 sm:px-0">
-			<h2 class="text-2xl font-semibold text-gray-900">Release {{ post.tag_name }}</h2>
+			<h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Release {{ post.tag_name }}</h2>
 		</div>
 		<div class="mt-6">
 			<dl class="grid grid-cols-1 sm:grid-cols-2">
-				<div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
-					<dt class="text-sm/6 font-medium text-gray-900">Published at </dt>
-					<dd class="mt-1 text-sm/6 text-gray-700 sm:mt-2">
+				<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-1 sm:px-0">
+					<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900">Published at </dt>
+					<dd class="mt-1 text-base/6 text-gray-700 dark:text-gray-300 sm:mt-2">
 						<time class="postlist-date" datetime="{{ post.published_at | htmlISODateString(undefined,page.lang) }}">{{ post.published_at | readableISODate("DDDD T",page.lang) }}</time>
 					</dd>
 				</div>
 				{% if post.author.login %}
-					<div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
-						<dt class="text-sm/6 font-medium text-gray-900">Release Manager</dt>
-						<dd class="mt-1 text-sm/6 text-gray-700 sm:mt-2">
-							<a href="{{post.author.html_url}}">@{{post.author.login}}</a>
+					<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-1 sm:px-0">
+						<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900 ">Release Manager</dt>
+						<dd class="mt-1 text-base/6 text-gray-700 dark:text-gray-300 sm:mt-2">
+							<a href="{{ post.author.html_url }}">@{{ post.author.login }}</a>
 						</dd>
 					</div>
 				{% endif %}
 
-				<div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
-					<dt class="text-sm/6 font-medium text-gray-900">Release Notice</dt>
-					<dd class="mt-1 text-sm/6 text-gray-700 sm:mt-2 px-3 markdown">{{post.body | github_md | safe}}</dd>
+				<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-2 sm:px-0">
+					<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900">Release Notice</dt>
+					<dd class="mt-1 text-base/6 text-gray-700 dark:text-gray-300 sm:mt-2 px-3 markdown">{{ post.body | github_md | safe }}</dd>
 				</div>
-				<div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
-					<dt class="text-sm/6 font-medium text-gray-900">Attachments</dt>
-					<dd class="mt-2 text-sm text-gray-900">
-						<ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+				<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-2 sm:px-0">
+					<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900">Attachments</dt>
+					<dd class="mt-2 text-base text-gray-900 dark:text-gray-300">
+						<ul role="list" class="divide-y dark:bg-neutral-900 bg-gray-50 divide-gray-200 dark:divide-gray-800 rounded-md border border-gray-200 dark:border-gray-700">
 							{%- for asset in post.assets %}
-								<li class="flex items-center justify-between py-4 pr-5 pl-4 text-sm/6">
+								<li class="flex items-center justify-between py-4 pr-5 pl-4 text-base/6">
 									<div class="flex w-0 flex-1 items-center">
 										<svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
 											<path fill-rule="evenodd" d="M15.621 4.379a3 3 0 0 0-4.242 0l-7 7a3 3 0 0 0 4.241 4.243h.001l.497-.5a.75.75 0 0 1 1.064 1.057l-.498.501-.002.002a4.5 4.5 0 0 1-6.364-6.364l7-7a4.5 4.5 0 0 1 6.368 6.36l-3.455 3.553A2.625 2.625 0 1 1 9.52 9.52l3.45-3.451a.75.75 0 1 1 1.061 1.06l-3.45 3.451a1.125 1.125 0 0 0 1.587 1.595l3.454-3.553a3 3 0 0 0 0-4.242Z" clip-rule="evenodd"/>
@@ -139,8 +147,8 @@
 										</div>
 									</div>
 									<div class="ml-4 shrink-0">
-										<span class="inline-flex items-center rounded-md bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700">DLs: {{asset.download_count}}</span>
-										<a href="{{asset.browser_download_url}}" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
+										<span class="inline-flex items-center rounded-md bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700">DLs: {{ asset.download_count }}</span>
+										<a href="{{ asset.browser_download_url }}" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
 									</div>
 								</li>
 							{%- endfor -%}
