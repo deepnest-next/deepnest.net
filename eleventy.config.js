@@ -36,7 +36,7 @@ export default async function (eleventyConfig) {
 			return false;
 		}
 	});
-
+	eleventyConfig.setWatchThrottleWaitTime(500);
 	eleventyConfig.setChokidarConfig({
 		usePolling: true,
 		interval: 500,

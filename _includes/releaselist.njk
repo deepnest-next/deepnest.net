@@ -1,8 +1,10 @@
 {%- css 'mypage' %}
 /*! build | {{ unixtime() }} */
-{% raw %}
+
 @reference "../../public/css/_index.css";
-.postlist { counter-reset: start-from {% endraw %}{{ (postslistCounter or postslist.length) + 1 }} {% raw %}}
+.postlist {
+	counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}
+}
 
 	.markdown{
 		@apply leading-normal break-words text-base text-gray-900 dark:text-neutral-100;
@@ -102,7 +104,6 @@
 		@apply bg-gray-100 dark:bg-gray-900;
 	}
 
-{% endraw %}
 {% endcss %}
 
 {%- for post in postslist %}
@@ -147,7 +148,7 @@
 										</div>
 									</div>
 									<div class="ml-4 shrink-0">
-										<span class="inline-flex items-center rounded-md bg-green-100 px-1.5 py-0.5 text-xs font-medium text-green-700">DLs: {{ asset.download_count }}</span>
+										<span class="inline-flex items-center rounded-md bg-green-100 px-1.5 py-0.5 text-xs max-sm:hidden font-medium text-green-700">DLs: {{ asset.download_count }}</span>
 										<a href="{{ asset.browser_download_url }}" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
 									</div>
 								</li>

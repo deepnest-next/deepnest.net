@@ -35,16 +35,12 @@
 	* Retrieve via `{% getBundle "js" %}` or `{% getBundleFileUrl "js" %}`
 	3. Learn more: https://github.com/11ty/eleventy-plugin-bundle
 	#}
-	{%- css %}
-	@reference "tailwindcss";
-	html.dark {
-		@apply bg-neutral-950;
-	}
-	{% endcss -%}
+
 		{#- Add an arbitrary string to the bundle #}
 		{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
-			{%- css 'draft' %}/* This is an arbitrary CSS string added to the bundle */
-@reference "tailwindcss";
+			{%- css %}/* This is an arbitrary CSS string added to the bundle */
+
+	@reference "{{eleventy.env.root}}/public/css/_index.css";
 
 .draft {
   position: relative;
@@ -70,9 +66,6 @@
 	font-size: 2.75rem;
 	z-index: 0
 }
-html.dark {
-	@apply bg-neutral-950;
-}
 		{% endcss -%}
 
 			{%- js %}
@@ -81,6 +74,18 @@ document.querySelectorAll('.draft').forEach(function(el) {
 });
 			{% endjs -%}
 		{% endif -%}
+		{%- cssAppend %}
+		@reference "{{eleventy.env.root}}/public/css/_index.css";
+		html.dark {
+			@apply bg-neutral-950;
+		}
+		html.dark body {
+			@apply bg-neutral-950;
+		}
+		#ueber-uns-2 {
+			@apply bg-amber-400;
+		}
+		{% endcssAppend -%}
 		{#- Add the contents of a file to the bundle #}
 		{#%- css %}{% include "_site/css/index.css" ignore missing %}{% endcss %#}
 
@@ -90,7 +95,7 @@ document.querySelectorAll('.draft').forEach(function(el) {
 		{#- Render the CSS bundle using inlined CSS (for the fastest site performance in production) #}
 
 		<link rel="stylesheet" href="/css/index.css">
-				{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
+		{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
 
 		<style>
 			{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}

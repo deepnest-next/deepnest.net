@@ -9,17 +9,17 @@ numberOfLatestPostsToShow: 5
 
 {% set postsCount = githubData.releases | length %}
 {% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
-<h1 class="text-xl font-bold underline">Latest {{ latestPostsCount }} Release{% if latestPostsCount != 1 %}s{% endif %}</h1>
+<h1 class="text-xl font-bold underline">Latest {{ latestPostsCount }} Release{% if latestPostsCount != 1 %}s{% endif %}
+</h1>
 
 {% set postslist = githubData.releases | head(1 * numberOfLatestPostsToShow) %}
 {% set postslistCounter = postsCount %}
 {% include "releaselist.njk" %}
 
-{%- if eleventy.env.runMode === "serve" -%}
-	<link rel="stylesheet" href="{% getBundleFileUrl 'css', 'mypage' %}?{{ unixtime() }}">
-{%- else -%}
-	<style>{% getBundle 'css', 'mypage' %}</style>
-{%- endif %}
+<style>
+	{% getBundle 'css', 'mypage' %}
+</style>
+
 {#
 {% set morePosts = postsCount - numberOfLatestPostsToShow %}
 {% if morePosts > 0 %}
