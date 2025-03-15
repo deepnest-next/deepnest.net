@@ -19,11 +19,11 @@
 		<link rel="alternate" hreflang="{{lang}}" href="{{page.url}}">
 		{% for link in page.url | locale_links %}
 			<link rel="alternate" hreflang="{{link.lang}}" href="https://www.11ty.dev{{link.url}}">
-		{% endfor %}
+		{% endfor -%}
 
-		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site! #}
+		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site! -#}
 		{#-
-	<meta name="generator" content="{{ eleventy.generator }}"> #}
+	<meta name="generator" content="{{ eleventy.generator }}"> -#}
 
 		{#-
 	Plain-text bundles are provided via the `eleventy-plugin-bundle` plugin:
@@ -34,12 +34,13 @@
 	* Add to a per-page bundle using `{% js %}{% endjs %}`
 	* Retrieve via `{% getBundle "js" %}` or `{% getBundleFileUrl "js" %}`
 	3. Learn more: https://github.com/11ty/eleventy-plugin-bundle
-	#}
+	-#}
 
-		{#- Add an arbitrary string to the bundle #}
-		{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
-			{%- css %}/* This is an arbitrary CSS string added to the bundle */
+		{#- Add an arbitrary string to the bundle -#}
 
+		{%- set css1 %}
+	/* This is an arbitrary CSS string added to the bundle */
+{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
 	@reference "{{eleventy.env.root}}/public/css/_index.css";
 
 .draft {
@@ -66,15 +67,8 @@
 	font-size: 2.75rem;
 	z-index: 0
 }
-		{% endcss -%}
+{% endif -%}
 
-			{%- js %}
-document.querySelectorAll('.draft').forEach(function(el) {
-  el.dataset.watermark = ('   '+ el.dataset.watermark + '   ').repeat(20000);
-});
-			{% endjs -%}
-		{% endif -%}
-		{%- cssAppend %}
 		@reference "{{eleventy.env.root}}/public/css/_index.css";
 		html.dark {
 			@apply bg-neutral-950;
@@ -85,7 +79,8 @@ document.querySelectorAll('.draft').forEach(function(el) {
 		#ueber-uns-2 {
 			@apply bg-amber-400;
 		}
-		{% endcssAppend -%}
+		{% endset -%}
+
 		{#- Add the contents of a file to the bundle #}
 		{#%- css %}{% include "_site/css/index.css" ignore missing %}{% endcss %#}
 
@@ -98,17 +93,13 @@ document.querySelectorAll('.draft').forEach(function(el) {
 		{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
 
 		<style>
-			{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
-				{%- getBundle "css", 'draft' -%}
-			{% endif %}
-			{%- getBundle "css" -%}
+			{{- css1 | postCSS | safe -}}
 		</style>
 		{#<link rel="stylesheet" href="{% getBundleFileUrl 'css' %}">#}
 
 		{#- Add the heading-anchors web component to the JavaScript bundle #}
 		{%- js %}{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}{% endjs %}
 		{%- js defer %}{% include "node_modules/alpinejs/dist/cdn.js" %}{% endjs %}
-		<script defer src="{% getBundleFileUrl 'js', 'defer' %}"></script>
 	</head>
 
 	<body class="ofy-hidden h-screen max-w-screen [&::-webkit-scrollbar]:w-2
@@ -120,8 +111,8 @@ document.querySelectorAll('.draft').forEach(function(el) {
 		<a href="#skip" class="sr-only">Skip to main content</a>
 		<div class="bg-white dark:bg-neutral-950 min-h-screen">
 			{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
-				{%set draftClass = "draft" %}
-				<div class="draft min-h-screen"  data-watermark="DRAFT WORK IN PROGRESS">
+				{% set draftClass = "draft" %}
+				<div class="draft min-h-screen" data-watermark="DRAFT WORK IN PROGRESS">
 				{% endif -%}
 
 				{% include "../header_menu.njk" %}
@@ -137,6 +128,16 @@ document.querySelectorAll('.draft').forEach(function(el) {
 		</div>
 		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
 		<script type="module" src="{% getBundleFileUrl 'js' %}"></script>
+		{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
+			<script defer>
+				// Add a watermark to the page
+				document
+					.querySelectorAll('.draft')
+					.forEach(function (el) {
+						el.dataset.watermark = ('   ' + el.dataset.watermark + '   ').repeat(20000);
+					});
+			</script>
+		{% endif -%}
 	</body>
 
 </html>

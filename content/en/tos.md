@@ -4,7 +4,7 @@ eleventyNavigation:
   key: tos
   parent: imprint
   title: Terms of Service
-  order: 3
+  order: 920
 ---
 # Terms of Service
 

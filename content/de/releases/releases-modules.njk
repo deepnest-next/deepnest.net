@@ -1,18 +1,33 @@
 ---
-title: Releases
-eleventyNavigation:
-  key: "release"
-  title: "Releases"
-  order: 300
+pagination:
+  data: githubOrgReleases
+  size: 1
+  alias: ghdata
+  addAllPagesToCollections: true
+permalink: "/{{lang}}/releases/{{ ghdata.name | slugify }}/index.html"
+eleventyComputed:
+  title: "Releases of {{ ghdata.name }}"
+  eleventyNavigation:
+    key: "release-modules-{{ ghdata.name | slugify}}"
+    title: "{{ ghdata.name }}"
+    parent: "release"
+    category: "modules"
+    description: "{{ ghdata.description }}"
+    order: 100
 numberOfLatestPostsToShow: 5
 ---
+<code>
+  <pre>{{ ghdata | jsonDump }}</pre>
+</code>
 
-{% set postsCount = githubData.releases | length %}
+<p class="text-base">{{ ghdata.description }}</p>
+
+{% set postsCount = ghdata.releases | length %}
 {% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
 <h1 class="text-xl font-bold underline">Latest {{ latestPostsCount }} Release{% if latestPostsCount != 1 %}s{% endif %}
 </h1>
 
-{% set postslist = githubData.releases | head(1 * numberOfLatestPostsToShow) %}
+{% set postslist = ghdata.releases | head(1 * numberOfLatestPostsToShow) %}
 {% set postslistCounter = postsCount %}
 {% include "releaselist.njk" %}
 

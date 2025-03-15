@@ -134,6 +134,11 @@ export default function (eleventyConfig) {
 		return false
 	});
 
+
+	eleventyConfig.addFilter("onlyLocale", function (data, lang) {
+		return data.filter((x) => x.url.startsWith(`/${lang}/`) || x.url.startsWith(`/feed/`))
+	});
+
 	eleventyConfig.addFilter("github_md", (data) => {
 		data = data.replace("## What's Changed", '');
 		data = gfmLinks(data, 'deepnest-next/deepnest');

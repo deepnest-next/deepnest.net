@@ -4,7 +4,7 @@ eleventyNavigation:
   key: privacy
   parent: imprint
   title: Privacy
-  order: 3
+  order: 910
 ---
 # Privacy
 

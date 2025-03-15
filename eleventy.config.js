@@ -27,12 +27,17 @@ import postcss from "postcss";
 import postcssNested from "postcss-nested";
 import tailwindcss from "@tailwindcss/postcss";
 
+import defaultSettings from "./config.page.json" with { type: "json" };
+
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default async function (eleventyConfig) {
 	// Drafts, see also _data/eleventyDataSchema.js
 	eleventyConfig.addPreprocessor("drafts", "*", (data, content) => {
 		if (data.draft && process.env.ELEVENTY_RUN_MODE === "build") {
+			return false;
+		}
+		if (data.draft && process.env.BUILD_MODE === "production") {
 			return false;
 		}
 	});
@@ -72,6 +77,17 @@ export default async function (eleventyConfig) {
 			}
 		]
 	});
+
+	eleventyConfig.addNunjucksAsyncFilter("postCSS", function (value, callback) {
+		let { type, page } = this;
+		postcss([
+			postcssNested(), tailwindcss()
+		])
+			.process(value, { from: undefined, to: null })
+			.then(function (result) {
+				callback(null, result.css);
+			});
+	});
 	// Adds the {% js %} paired shortcode
 	eleventyConfig.addBundle("js", {
 		toFileDirectory: "js/gen",
@@ -80,7 +96,7 @@ export default async function (eleventyConfig) {
 	// Official plugins
 	eleventyConfig.addPlugin(EleventyI18nPlugin, {
 		// any valid BCP 47-compatible language tag is supported
-		defaultLanguage: "en", // Required, this site uses "en"
+		defaultLanguage: defaultSettings.defaultLanguage, // Required, this site uses "en"
 
 		// Rename the default universal filter names
 		filters: {
@@ -125,55 +141,32 @@ export default async function (eleventyConfig) {
 	eleventyConfig.addPlugin(footnotes, { title: "Footnotes" /* TODO: fork and make multilingual … */ })
 
 
-	eleventyConfig.addPlugin(feedPlugin, {
-		type: "atom", // or "rss", "json"
-		outputPath: "/en/feed/feed.xml",
-		stylesheet: "pretty-atom-feed.xsl",
-		templateData: {
-			eleventyNavigation: {
-				key: "Feed",
-				order: 999
+	for (let locale of defaultSettings.languages) {
+		eleventyConfig.addPlugin(feedPlugin, {
+			type: "atom", // or "rss", "json"
+			outputPath: `/${locale}/feed/feed.xml`,
+			stylesheet: "pretty-atom-feed.xsl",
+			templateData: {
+				eleventyNavigation: {
+					key: "Feed",
+					order: 999
+				}
+			},
+			collection: {
+				name: `blog_${locale}`,
+				limit: 10,
+			},
+			metadata: {
+				language: locale,
+				title: `deepnest.net - The deepnest-next Blog (${locale})`,
+				subtitle: "This is a longer description about your blog.",
+				base: "https://www.deepnest.net/",
+				author: {
+					name: "Josef Fröhle"
+				}
 			}
-		},
-		collection: {
-			name: "blog_en",
-			limit: 10,
-		},
-		metadata: {
-			language: "en",
-			title: "deepnest.net - The deepnest-next Blog",
-			subtitle: "This is a longer description about your blog.",
-			base: "https://www.deepnest.net/",
-			author: {
-				name: "Josef Fröhle"
-			}
-		}
-	});
-
-	eleventyConfig.addPlugin(feedPlugin, {
-		type: "atom", // or "rss", "json"
-		outputPath: "/de/feed/feed.xml",
-		stylesheet: "pretty-atom-feed.xsl",
-		templateData: {
-			eleventyNavigation: {
-				key: "Feed",
-				order: 999
-			}
-		},
-		collection: {
-			name: "blog_de",
-			limit: 10,
-		},
-		metadata: {
-			language: "de",
-			title: "deepnest.net - Der deepnest-next Blog",
-			subtitle: "This is a longer description about your blog.",
-			base: "https://www.deepnest.net/",
-			author: {
-				name: "Josef Fröhle"
-			}
-		}
-	});
+		});
+	}
 
 	// Image optimization: https://www.11ty.dev/docs/plugins/image/#eleventy-transform
 	eleventyConfig.addPlugin(eleventyImageTransformPlugin, {

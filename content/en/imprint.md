@@ -3,7 +3,7 @@ slugOverride: legal-notice
 eleventyNavigation:
   key: Imprint
   title: Imprint
-  order: 3
+  order: 900
 type: page
 ---
 # Impressum

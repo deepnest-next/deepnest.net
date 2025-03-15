@@ -16,6 +16,7 @@
     "clean:site": "rimraf -rf _site",
     "postinstall": "patch-package",
     "start": "npm-run-all clean:site start:run",
+    "start:prod": "cross-env BUILD_MODE=production npm-run-all clean:site start:run",
     "start:run": "npm-run-all -p startdev:*",
     "startdev:11ty": "npx @11ty/eleventy --serve --quiet",
     "startdev:css": "postcss public/css/_index.css -w -o _site/css/index.css ",
@@ -36,7 +37,7 @@
     "@pcdevil/eleventy-plugin-intl-utils": "^1.1.0",
     "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
     "@sardine/eleventy-plugin-inline-svg": "^0.0.1",
-    "@tailwindcss/postcss": "^4.0.8",
+    "@tailwindcss/postcss": "^4.0.14",
     "alpinejs": "^3.14.8",
     "cross-env": "^7.0.3",
     "eleventy-plugin-automatic-noopener": "^2.0.2",
@@ -73,19 +74,14 @@
     "slugify": "^1.6.6",
     "stylelint": "^16.14.1",
     "stylelint-config-standard-scss": "^14.0.0",
-    "tailwindcss": "^4.0.8",
+    "tailwindcss": "^4.0.14",
     "zod": "^3.23.8",
     "zod-validation-error": "^3.3.1"
   },
   "dependencies": {
-    "@11ty/eleventy-plugin-bundle": "file://C:\\Users\\josef\\Documents\\git\\eleventy-plugin-bundle",
+    "@dotenvx/dotenvx": "^1.38.5",
+    "@octokit/rest": "^21.1.1",
     "@zachleat/heading-anchors": "^1.0.1"
   },
-  "overrides": {
-    "@11ty/eleventy": {
-      "dependencies": {
-        "@11ty/eleventy-plugin-bundle": "file://C:\\Users\\josef\\Documents\\git\\eleventy-plugin-bundle"
-      }
-    }
-  }
+  "overrides": {}
 }

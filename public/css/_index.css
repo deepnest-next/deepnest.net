@@ -5,13 +5,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-
-    --color-sky-650: oklch(54.31% 0.1296 242.65);
-
+	--color-sky-650: oklch(54.31% 0.1296 242.65);
 }
 
 .ofy-hidden {
-    overflow-x: hidden;
+	overflow-x: hidden;
 }
 
 /*
