@@ -37,6 +37,7 @@ const options = {};
 
 marked.use(markedLinkifyIt(schemas, options));
 
+export const markdown = marked;
 
 function gfmLinks(text, context) {/*
 * Adapted from Github's port of showdown.js -- A javascript port of Markdown.
@@ -48,7 +49,7 @@ function gfmLinks(text, context) {/*
 
 
 	var username, repo;
-	if (debug) console.log('>>>context="' + context + "'");
+	if (debug) console.log('>>>context="' + context + '"');
 	if (context) {
 		var parts = context.split('/');
 		username = parts[0];
@@ -135,6 +136,17 @@ export default function (eleventyConfig) {
 		return false
 	});
 
+	eleventyConfig.addFilter("jsonEscape", function (value) {
+		if (typeof value === 'string') {
+			return value
+				.replace(/\\/g, '\\\\')
+				.replace(/"/g, '\\"')
+				.replace(/\n/g, '\\n')
+				.replace(/\r/g, '\\r')
+				.replace(/\t/g, '\\t');
+		}
+		return value;
+	});
 
 	eleventyConfig.addFilter("onlyLocale", function (data, lang) {
 		return data.filter((x) => x.url.startsWith(`/${lang}/`) || x.url.startsWith(`/feed/`))
@@ -182,6 +194,28 @@ export default function (eleventyConfig) {
 	eleventyConfig.addFilter("jsonDump", (data) => {
 		return JSON.stringify(data, null, 4);
 	})
+
+	eleventyConfig.addFilter("safeJsonDump", function(data, indent = 2) {
+        // Create a WeakSet to track circular references
+        const seen = new WeakSet();
+
+        return JSON.stringify(data, (key, value) => {
+            // Handle non-object values and null directly
+            if (typeof value !== 'object' || value === null) {
+                return value;
+            }
+
+            // Check for circular references
+            if (seen.has(value)) {
+                return '[Circular Reference]';
+            }
+
+            // Add the value to our collection
+            seen.add(value);
+
+            return value;
+        }, indent);
+    });
 
 	eleventyConfig.addFilter("readableDate", (dateObj, format, zone, lang) => {
 		// Formatting tokens for Luxon: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
