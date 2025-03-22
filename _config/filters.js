@@ -128,6 +128,7 @@ export default function (eleventyConfig) {
 	});
 
 	eleventyConfig.addNunjucksGlobal("startWithLocale", function (lang, path) {
+		if (path === false && this.page.lang == lang) return true;
 		if (path.startsWith(`/${lang}/`) || path.startsWith(`/feed/`)) {
 			return true
 		}

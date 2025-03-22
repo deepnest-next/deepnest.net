@@ -20,7 +20,8 @@ async function fetchRepos() {
         !repo.archived &&
         !repo.fork &&
         repo.name !== '.github' &&
-        repo.name !== 'deepnest.net'
+        repo.name !== 'deepnest.net' &&
+        repo.name !== 'docker-images'
     );
 
     // Für jedes aktive Repository die Releases abrufen (ebenfalls mit Paging)

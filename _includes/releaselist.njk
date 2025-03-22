@@ -121,62 +121,179 @@
 		@apply bg-gray-700;
 	}
 }
+
+
+	.release-header {
+		cursor: pointer;
+	}
+
+	.chevron {
+		transition: transform 0.3s ease;
+	}
+
+	.chevron.rotate {
+		transform: rotate(180deg);
+	}
+
+	/* Smooth transition for the content */
+	.content-transition {
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+	}
+
+	.content-transition.expanded {
+		max-height: 2000px; /* Large enough to accommodate content */
+	}
 {% endset %}
 <style type="text/css">
 	{{css | postCSS | safe}}
 </style>
 
-{%- for post in postslist %}
-	<div class="mt-6 mb-12">
-		<div class="px-4 sm:px-0">
-			<h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Release {{ post.tag_name }}</h2>
-		</div>
-		<div class="mt-6">
-			<dl class="grid grid-cols-1 sm:grid-cols-2">
-				<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-1 sm:px-0">
-					<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900">Published at </dt>
-					<dd class="mt-1 text-base/6 text-gray-700 dark:text-gray-300 sm:mt-2">
-						<time class="postlist-date" datetime="{{ post.published_at | htmlISODateString(undefined,page.lang) }}">{{ post.published_at | readableISODate("DDDD T",page.lang) }}</time>
-					</dd>
-				</div>
-				{% if post.author.login %}
-					<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-1 sm:px-0">
-						<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900 ">Release Manager</dt>
-						<dd class="mt-1 text-base/6 text-gray-700 dark:text-gray-300 sm:mt-2">
-							<a href="{{ post.author.html_url }}">@{{ post.author.login }}</a>
-						</dd>
-					</div>
-				{% endif %}
+<script defer>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Alpine store
+    if (typeof Alpine !== 'undefined') {
+      // Ensure the store exists before the components are initialized
+      Alpine.store('releaseStates', {});
 
-				<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-2 sm:px-0">
-					<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900">Release Notice</dt>
-					<dd class="mt-1 text-base/6 text-gray-700 dark:text-gray-300 sm:mt-2 px-3 markdown">{{ post.body | github_md | safe }}</dd>
-				</div>
-				<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-2 sm:px-0">
-					<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900">Attachments</dt>
-					<dd class="mt-2 text-base text-gray-900 dark:text-gray-300">
-						<ul role="list" class="divide-y dark:bg-neutral-900 bg-gray-50 divide-gray-200 dark:divide-gray-800 rounded-md border border-gray-200 dark:border-gray-700">
-							{%- for asset in post.assets %}
-								<li class="flex items-center justify-between py-4 pr-5 pl-4 text-base/6">
-									<div class="flex w-0 flex-1 items-center">
-										<svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-											<path fill-rule="evenodd" d="M15.621 4.379a3 3 0 0 0-4.242 0l-7 7a3 3 0 0 0 4.241 4.243h.001l.497-.5a.75.75 0 0 1 1.064 1.057l-.498.501-.002.002a4.5 4.5 0 0 1-6.364-6.364l7-7a4.5 4.5 0 0 1 6.368 6.36l-3.455 3.553A2.625 2.625 0 1 1 9.52 9.52l3.45-3.451a.75.75 0 1 1 1.061 1.06l-3.45 3.451a1.125 1.125 0 0 0 1.587 1.595l3.454-3.553a3 3 0 0 0 0-4.242Z" clip-rule="evenodd"/>
-										</svg>
-										<div class="ml-4 flex min-w-0 flex-1 gap-2">
-											<span class="truncate font-medium">{{asset.name}}</span>
-											<span class="shrink-0 text-gray-400">{{asset.size | fileSize}}</span>
-										</div>
-									</div>
-									<div class="ml-4 shrink-0">
-										<span class="inline-flex items-center rounded-md bg-green-100 px-1.5 py-0.5 text-xs max-sm:hidden font-medium text-green-700">DLs: {{ asset.download_count }}</span>
-										<a href="{{ asset.browser_download_url }}" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
-									</div>
-								</li>
-							{%- endfor -%}
-						</ul>
-					</dd>
-				</div>
-			</dl>
-		</div>
-	</div>
+      // Function to open a specific release based on the hash
+      function openReleaseFromHash() {
+        if (window.location.hash) {
+          const targetId = window.location.hash.substring(1);
+          const targetHeading = document.getElementById(targetId);
+
+          if (targetHeading) {
+            // Find the parent release container
+            const releaseContainer = targetHeading.closest('.release-container');
+
+            if (releaseContainer) {
+              // Close all releases first
+              document.querySelectorAll('.release-container').forEach(el => {
+                const ref = el.getAttribute('data-release-ref');
+                if (ref) Alpine.store('releaseStates')[ref] = false;
+              });
+
+              // Open the targeted release
+              const releaseRef = releaseContainer.getAttribute('data-release-ref');
+              if (releaseRef) Alpine.store('releaseStates')[releaseRef] = true;
+
+              // Scroll to the release heading
+              setTimeout(() => {
+                targetHeading.scrollIntoView({ behavior: 'smooth' });
+              }, 500);
+            }
+          }
+        }
+      }
+
+      // Listen for hash changes
+      window.addEventListener('hashchange', openReleaseFromHash);
+
+      // Check if Alpine is initialized before setting states
+      if (document.querySelector('.release-container')) {
+        // Set first release as open by default if no hash
+        if (!window.location.hash) {
+          const firstRelease = document.querySelector('.release-container');
+          if (firstRelease) {
+            const ref = firstRelease.getAttribute('data-release-ref');
+            if (ref) Alpine.store('releaseStates')[ref] = true;
+          }
+        } else {
+          openReleaseFromHash();
+        }
+      }
+    }
+  });
+</script>
+
+{%- for post in postslist %}
+  {% set releaseRef = 'release-' + post.tag_name | replace('.', '-') | replace(' ', '-') | lower %}
+  <div
+    class="mt-6 mb-12 release-container"
+    data-release-ref="{{ releaseRef }}"
+    x-data="{
+      get open() {
+        // Safely access store with fallback
+        return Alpine.store('releaseStates') &&
+               typeof Alpine.store('releaseStates')['{{ releaseRef }}'] !== 'undefined'
+               ? Alpine.store('releaseStates')['{{ releaseRef }}']
+               : {{ loop.first }};
+      },
+      set open(value) {
+        if (Alpine.store('releaseStates')) {
+          Alpine.store('releaseStates')['{{ releaseRef }}'] = value;
+        }
+
+        // Update URL hash when toggling
+        if (value) {
+          // Update URL hash and allow scrolling
+          window.location.hash = '{{ releaseRef }}';
+        } else if (window.location.hash === '#{{ releaseRef }}') {
+          // Remove hash from URL if this section is being closed
+          history.pushState(null, null, window.location.pathname + window.location.search);
+        }
+      }
+    }"
+  >
+    <div class="px-4 sm:px-0 release-header flex items-center justify-between" @click="open = !open">
+      <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Release {{ post.tag_name }}</h2>
+      <svg class="chevron size-5 text-gray-500" :class="{'rotate': open}" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a 1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+      </svg>
+    </div>
+    <div
+      class="content-transition"
+      :class="{'expanded': open}"
+      x-cloak
+    >
+      <div class="mt-6">
+        <dl class="grid grid-cols-1 sm:grid-cols-2">
+          <div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-1 sm:px-0">
+							<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900">Published at </dt>
+							<dd class="mt-1 text-base/6 text-gray-700 dark:text-gray-300 sm:mt-2">
+								<time class="postlist-date" datetime="{{ post.published_at | htmlISODateString(undefined,page.lang) }}">{{ post.published_at | readableISODate("DDDD T",page.lang) }}</time>
+							</dd>
+						</div>
+						{% if post.author.login %}
+							<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-1 sm:px-0">
+								<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900 ">Release Manager</dt>
+								<dd class="mt-1 text-base/6 text-gray-700 dark:text-gray-300 sm:mt-2">
+									<a href="{{ post.author.html_url }}">@{{ post.author.login }}</a>
+								</dd>
+							</div>
+						{% endif %}
+
+						<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-2 sm:px-0">
+							<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900">Release Notice</dt>
+							<dd class="mt-1 text-base/6 text-gray-700 dark:text-gray-300 sm:mt-2 px-3 markdown">{{ post.body | github_md | safe }}</dd>
+						</div>
+						<div class="border-t border-gray-100 dark:border-gray-800 px-4 py-6 sm:col-span-2 sm:px-0">
+							<dt class="text-base/6 font-medium dark:text-gray-100 text-gray-900">Attachments</dt>
+							<dd class="mt-2 text-base text-gray-900 dark:text-gray-300">
+								<ul role="list" class="divide-y dark:bg-neutral-900 bg-gray-50 divide-gray-200 dark:divide-gray-800 rounded-md border border-gray-200 dark:border-gray-700">
+									{%- for asset in post.assets %}
+										<li class="flex items-center justify-between py-4 pr-5 pl-4 text-base/6">
+											<div class="flex w-0 flex-1 items-center">
+												<svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+													<path fill-rule="evenodd" d="M15.621 4.379a3 3 0 0 0-4.242 0l-7 7a3 3 0 0 0 4.241 4.243h.001l.497-.5a.75.75 0 0 1 1.064 1.057l-.498.501-.002.002a4.5 4.5 0 0 1-6.364-6.364l7-7a4.5 4.5 0 0 1 6.368 6.36l-3.455 3.553A2.625 2.625 0 1 1 9.52 9.52l3.45-3.451a.75.75 0 1 1 1.061 1.06l-3.45 3.451a1.125 1.125 0 0 0 1.587 1.595l3.454-3.553a3 3 0 0 0 0-4.242Z" clip-rule="evenodd"/>
+												</svg>
+												<div class="ml-4 flex min-w-0 flex-1 gap-2">
+													<span class="truncate font-medium">{{asset.name}}</span>
+													<span class="shrink-0 text-gray-400">{{asset.size | fileSize}}</span>
+												</div>
+											</div>
+											<div class="ml-4 shrink-0">
+												<span class="inline-flex items-center rounded-md bg-green-100 px-1.5 py-0.5 text-xs max-sm:hidden font-medium text-green-700">DLs: {{ asset.download_count }}</span>
+												<a href="{{ asset.browser_download_url }}" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
+											</div>
+										</li>
+									{%- endfor -%}
+								</ul>
+							</dd>
+						</div>
+        </dl>
+      </div>
+    </div>
+  </div>
 {%- endfor %}

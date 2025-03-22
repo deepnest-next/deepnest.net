@@ -4,29 +4,15 @@ eleventyNavigation:
   key: "release"
   title: "Releases"
   order: 300
+eleventyComputed:
+  eleventyNavigation:
+    url: "/{{lang}}/releases/deepnest"
 numberOfLatestPostsToShow: 5
 ---
 
-{% set postsCount = githubData.releases | length %}
-{% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
-<h1 class="text-xl font-bold underline">Latest {{ latestPostsCount }} Release{% if latestPostsCount != 1 %}s{% endif %}
-</h1>
-
-{% set postslist = githubData.releases | head(1 * numberOfLatestPostsToShow) %}
-{% set postslistCounter = postsCount %}
-{% include "releaselist.njk" %}
-
-{#
-{% set morePosts = postsCount - numberOfLatestPostsToShow %}
-{% if morePosts > 0 %}
-<p>{{ morePosts }} more post{% if morePosts != 1 %}s{% endif %} can be found in <a href="blog.njk">the archive</a>.</p>
-{% endif %}
-#}
-{# List every content page in the project #}
-{#
-<ul>
-	{%- for entry in collections.all %}
-	<li><a href="{{ entry.url }}"><code>{{ entry.url }}</code></a></li>
-	{%- endfor %}
-</ul>
-#}
+<p>Die gesuchte Ressource wurde nach <a href="{{metadata.url}}{{lang}}/releases/deepnest" class="text-sky-650 hover:bg-sky-50 dark:hover:bg-sky-950">/{{lang}}/releases/deepnest</a> verschoben.</p>
+<script>
+	setTimeout(function() {
+		window.location.href = "{{metadata.url}}{{lang}}/releases/deepnest";
+	}, 1000);
+</script>

@@ -2,7 +2,7 @@ import defaultSettings from "../config.page.json" with { type: "json" };
 export default {
 	debug: false,
 	title: "deepnest-next",
-	url: "https://www.deepnest.net/",
+	url: process.env.BUILD_MODE !== "production" ? "http://localhost:8080/" : "https://www.deepnest.net/",
 	language: defaultSettings.defaultLanguage,
 	description: "I am writing about my experiences as a naval navel-gazer.",
 	author: {
