@@ -10,7 +10,7 @@
 	"scripts": {
 		"build": "npm-run-all clean:site build:11ty build:css",
 		"build:11ty": "npx @11ty/eleventy",
-		"build:css": "postcss public/css/_index.css -o _site/css/index.css ",
+		"build:css": "postcss ./public/css/_index.css -o ./_site/css/index.css ",
 		"build-nocolor": "cross-env NODE_DISABLE_COLORS=1 npx @11ty/eleventy",
 		"build-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/",
 		"clean:site": "rimraf -rf _site",
