@@ -41,7 +41,7 @@
 		{%- set css1 %}
 	/* This is an arbitrary CSS string added to the bundle */
 {%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
-	@reference "{{eleventy.env.root}}/public/css/index.css";
+	@reference "{{eleventy.env.root}}/public/css/_index.css";
 
 .draft {
   position: relative;
@@ -69,7 +69,7 @@
 }
 {% endif -%}
 
-		@reference "{{eleventy.env.root}}/public/css/index.css";
+		@reference "{{eleventy.env.root}}/public/css/_index.css";
 		html.dark {
 			@apply bg-neutral-950;
 		}
@@ -82,7 +82,7 @@
 		{% endset -%}
 
 		{#- Add the contents of a file to the bundle #}
-		{#%- css %}{% include "_site/css/index.css" ignore missing %}{% endcss %#}
+		{#%- css %}{% include "_site/css/_index.css" ignore missing %}{% endcss %#}
 
 		{#- Or you can add from node_modules #}
 		{# {%- css %}{% include "node_modules/prismjs/themes/prism-okaidia.css" %}{% endcss %} #}
