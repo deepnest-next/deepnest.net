@@ -1,7 +1,7 @@
 {% set css %}
 /*! build | {{ unixtime() }} */
 
-@reference "{{eleventy.env.root}}/public/css/_index.css";
+@reference "{{eleventy.env.root}}/public/css/index.css";
 .postlist {
 	counter-reset: start-from {{(postslistCounter or postslist.length) + 1}};
 }

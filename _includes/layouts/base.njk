@@ -41,7 +41,7 @@
 		{%- set css1 %}
 	/* This is an arbitrary CSS string added to the bundle */
 {%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
-	@reference "{{eleventy.env.root}}/public/css/_index.css";
+	@reference "{{eleventy.env.root}}/public/css/index.css";
 
 .draft {
   position: relative;
@@ -69,7 +69,7 @@
 }
 {% endif -%}
 
-		@reference "{{eleventy.env.root}}/public/css/_index.css";
+		@reference "{{eleventy.env.root}}/public/css/index.css";
 		html.dark {
 			@apply bg-neutral-950;
 		}

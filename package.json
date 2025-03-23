@@ -10,7 +10,7 @@
 	"scripts": {
 		"build": "npm-run-all clean:site build:11ty",
 		"build:11ty": "npx @11ty/eleventy",
-		"build:css": "postcss public/css/_index.css -o _site/css/index.css ",
+		"build:css": "postcss public/css/index.css -o _site/css/index.css ",
 		"build-nocolor": "cross-env NODE_DISABLE_COLORS=1 npx @11ty/eleventy",
 		"build-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/",
 		"clean:site": "rimraf -rf _site",
@@ -19,7 +19,7 @@
 		"start:prod": "cross-env BUILD_MODE=production npm-run-all clean:site start:run",
 		"start:run": "npm-run-all -p startdev:*",
 		"startdev:11ty": "npx @11ty/eleventy --serve --quiet",
-		"startdev:css": "postcss public/css/_index.css -w -o _site/css/index.css ",
+		"startdev:css": "postcss public/css/index.css -w -o _site/css/index.css ",
 		"start-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/ --serve --quiet",
 		"debug": "cross-env DEBUG=Eleventy* npx @11ty/eleventy",
 		"debugstart": "cross-env DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
