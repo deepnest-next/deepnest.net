@@ -1,12 +1,15 @@
 ---
+draft: true
 pagination:
   data: githubOrgReleases
   size: 1
   alias: ghdata
   addAllPagesToCollections: true
-permalink: "/{{lang}}/releases/{{ ghdata.name | slugify }}/index.html"
+
 eleventyComputed:
   title: "Releases of {{ ghdata.name }}"
+  permalink: "/{{lang}}/releases/{{ ghdata.name | slugify }}/index.html"
+  pageID: "release-modules-{{ ghdata.name | slugify }}"
   eleventyNavigation:
     key: "release-modules-{{ ghdata.name | slugify}}"
     title: "{{ ghdata.name }}"
