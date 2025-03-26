@@ -1,5 +1,5 @@
 <div x-cloak class="relative inline-flex items-center gap-2 mr-2 sm:pb-2">
-  <button {#id="theme-toggle"#} x-on:click="darkMode = (darkMode === 'light')?'dark':'light'" type="button" class="w-7 h-7 p-1 transition rounded-full cursor-pointer text-gray-400 hover:bg-gray-200 dark:text-gray-100 dark:hover:bg-gray-600">
+  <button {#id="theme-toggle"#} x-on:click="darkMode = (darkMode !== 'light')?'light':'dark'" type="button" class="w-7 h-7 p-1 transition rounded-full cursor-pointer text-gray-400 hover:bg-gray-200 dark:text-gray-100 dark:hover:bg-gray-600">
     <span class="sr-only">dark mode toggle</span>
     <svg {#id="theme-toggle-dark-icon"#} x-bind:class="{'hidden': darkMode !== 'light'}" class="hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
