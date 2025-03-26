@@ -1,5 +1,7 @@
 ---
 slugOverride: "tos"
+draft: true
+eleventyExcludeFromCollections: true
 eleventyNavigation:
   key: tos
   parent: imprint

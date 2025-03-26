@@ -1,4 +1,6 @@
 export default {
+	lang: "en",
+	dir: "ltr",
 	layout: "layouts/home.njk",
 };
 

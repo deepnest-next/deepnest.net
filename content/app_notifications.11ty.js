@@ -15,7 +15,6 @@ export function render(data) {
 			content: function () { return markdown(item.content) }(),
 		};
 	});
-	console.log(Object.keys(data));
 	return JSON.stringify({
 		"notifications": json,
 		"meta": {

@@ -3,20 +3,23 @@ title: "deepnest next Blog"
 subtitle: false
 layout: layouts/home.njk
 eleventyNavigation:
-  key: "Blog"
-  order: 400
-numberOfLatestPostsToShow: 6
+  key: "BlogArchive"
+  title: "Blog Archive"
+  parent: "Blog"
+  order: 100
+pagination:
+  data: collections.blog_de
+  size: 10
+  alias: posts
+permalink: "/{{lang}}/blog/archive/{% if posts.pageNumber %}{{ posts.pageNumber + 1 }}/{% endif %}"
 ---
-{% set blogPosts = collections['blog_'+page.lang] %}
-{% set postsCount = blogPosts | length %}
-{% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
 <h2 data-ha-exclude class="text-3xl font-bold underline pb-6" id="last-blog-posts">Latest {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h2>
 
-{% set postslist = blogPosts | head(-1 * numberOfLatestPostsToShow) %}
+{% set postslist = posts %}
 {% set postslistCounter = postsCount %}
 {% include "postslist.njk" %}
 
 {% set morePosts = postsCount - numberOfLatestPostsToShow %}
 {% if morePosts > 0 %}
-<p>{{ morePosts }} more post{% if morePosts != 1 %}s{% endif %} can be found in <a href="/{{lang}}/blog/archive/">the archive</a>.</p>
+<p>{{ morePosts }} more post{% if morePosts != 1 %}s{% endif %} can be found in <a href="blog.njk">the archive</a>.</p>
 {% endif %}

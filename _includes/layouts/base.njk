@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ metadata.language }}" class="h-full"
+<html lang="{{ page.lang }}" dir="{{ dir }}"  class="h-full"
 	x-data="{darkMode: localStorage.getItem('darkMode')	|| localStorage.setItem('darkMode', 'system'), mobilemenu: false}"
 	x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))"
 	x-bind:class="{'dark': darkMode === 'dark' || (darkMode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)}">
@@ -100,6 +100,15 @@
 		{#- Add the heading-anchors web component to the JavaScript bundle #}
 		{%- js %}{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}{% endjs %}
 		{%- js defer %}{% include "node_modules/alpinejs/dist/cdn.js" %}{% endjs %}
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+		<style>
+			.font-handwriting {
+				font-family: 'Caveat', cursive;
+			}
+		</style>
 	</head>
 
 	<body class="ofy-hidden h-screen max-w-screen [&::-webkit-scrollbar]:w-2
@@ -119,7 +128,7 @@
 
 				<heading-anchors>
 					{{ content | safe }}
-				</heading-anchors>
+        </heading-anchors>
 
 				{% include "../footer.njk" %}
 				{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}

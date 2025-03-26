@@ -1,5 +1,6 @@
 ---
 title: Über uns
+draft: true
 eleventyNavigation:
   key: about
   title: Über uns

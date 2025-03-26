@@ -1,5 +1,6 @@
 export default {
 	lang: "ar",
+	dir: "rtl",
 	draft: true,
 	permalink: function (data) {
 		// Slug override for localized URL slugs

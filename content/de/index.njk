@@ -7,7 +7,7 @@ eleventyNavigation:
 ---
 
 <section>
-	<h1 class="text-4xl font-bold ">deepnest-next {{ githubData.releases[0].tag_name }} <span class="ml-2 align-top inline-block rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-300">stable</span></h1>
+	<h2 class="text-3xl font-bold ">deepnest-next {{ githubData.releases[0].tag_name }} <span class="ml-2 align-top inline-block rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-300">stable</span></h2>
 	<p class="text-xl my-4">Was bietet deepnest an aktuellen Features und Funktionen?</p>
 	<div class="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 		<div class="rounded-lg bg-gray-50/75 dark:bg-gray-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-110 hover:z-10">
@@ -59,11 +59,93 @@ eleventyNavigation:
 			<h3 class="mb-2 text-lg font-semibold dark:text-white">Zeit- und Kostensparend</h3>
 			<p class="text-gray-600 dark:text-gray-300">Reduzieren Sie Materialverschwendung und Produktionszeit durch optimierte Planung.</p>
 		</div>
+
+		<div class="rounded-lg bg-gray-50/75 dark:bg-gray-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-110 hover:z-10">
+			<div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+				</svg>
+			</div>
+			<h3 class="mb-2 text-lg font-semibold dark:text-white">Regelmäßige Updates</h3>
+			<p class="text-gray-600 dark:text-gray-300">Die Software wird aktiv weiterentwickelt mit regelmäßigen Verbesserungen und Updates. Basierend auf dem <a href="https://www.deepnest.io/" class="text-orange-600 hover:bg-orange-100 hover:dark:bg-orange-900 dark:text-orange-300">ursprünglichen Projekt</a>, bieten wir kontinuierliche Pflege und neue Funktionen.</p>
+		</div>
 	</div>
 </section>
 
-<section class="mt-12">
-	<h1 class="text-4xl font-bold">deepnest-next v2.0.0 <span class="ml-2 align-top inline-block rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800 dark:bg-amber-900 dark:text-amber-200">in Entwicklung</span></h1>
+<!-- New Screenshot Gallery Section -->
+<section class="my-16">
+  <h2 class="text-3xl font-bold mb-8">Screenshots</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Screenshot 1 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('Screenshot_2025-03-23_002455.png', 'Hauptansicht der Anwendung')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/Screenshot_2025-03-23_002455.png" width="354" alt="Hauptansicht der Anwendung" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-xl dark:text-white">Hauptansicht der Anwendung</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screenshot 2 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('parts2.png', 'Dateiimport und -export')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/parts2.png" width="354" alt="Dateiimport und -export" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-xl dark:text-white">Dateiimport und -export</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screenshot 3 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('nesting_results.png', 'Nesting Ergebnisse')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/nesting_results.png" width="354" alt="Nesting Ergebnisse" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-xl dark:text-white">Nesting Ergebnisse</p>
+        </div>
+      </div>
+    </div>
+    <!-- Screenshot 4 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings.png', 'Einstellungen')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/settings.png" width="354" alt="Einstellungen" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-xl dark:text-white">Einstellungen</p>
+        </div>
+      </div>
+    </div>
+    <!-- Screenshot 5 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings2.png', 'Einstellungen 2')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/settings2.png" width="354" alt="Einstellungen 2" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-xl dark:text-white">Einstellungen 2</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="my-16">
+{% if githubData.releases.length > 0 %}
+  {% set assets = githubData.releases[0].assets %}
+  {% include "downloadlist.njk" %}
+{% endif %}
+</section>
+
+{#
+<section class="mt-48">
+	<h2 class="text-3xl font-bold">deepnest-next v2.0.0 <span class="ml-2 align-top inline-block rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800 dark:bg-amber-900 dark:text-amber-200">in Entwicklung</span></h2>
 	<p class="text-xl my-4">Welche Features werden wir für v2.0 erwarten können?</p>
 	<div class="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 		<div class="rounded-lg bg-gray-50/75 dark:bg-gray-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-110 hover:z-10">
@@ -158,3 +240,145 @@ eleventyNavigation:
 		</div>
 	</div>
 </section>
+<!-- New Screenshot Gallery Section -->
+<section class="my-16">
+  <h2 class="text-3xl font-bold mb-8">Preview Screenshots v2.0</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Screenshot 1 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('Screenshot_2025-03-23_002455.png', 'Hauptansicht der Anwendung')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/Screenshot_2025-03-23_002455.png" width="354" alt="Hauptansicht der Anwendung" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-lg dark:text-white">Hauptansicht der Anwendung</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screenshot 2 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('parts2.png', 'Dateiimport und -export')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/parts2.png" width="354" alt="Optimierung im Prozess" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-lg dark:text-white">Optimierung im Prozess</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screenshot 3 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('nesting_results.png', 'Nesting Ergebnisse')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/nesting_results.png" width="354" alt="Teile platzieren" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-lg dark:text-white">Teile platzieren</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+#}
+
+<!-- LIGHTBOX -->
+
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 bg-black/90 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex items-center justify-center p-4">
+  <div class="relative max-w-4xl w-full mx-auto bg-transparent rounded-lg transform scale-95 transition-all duration-300">
+    <div class="absolute -top-12 right-0 flex items-center gap-4">
+      <button id="fullSizeToggle" onclick="openInNewWindow()" class="text-white hover:text-blue-400 transition-colors text-base flex items-center gap-2">
+        <span id="viewModeText">In neuem Fenster öffnen</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </button>
+
+      <button onclick="closeLightbox()" class="text-white hover:text-blue-400 transition-colors text-3xl flex items-center gap-2">
+        <span class="text-base font-medium">Schließen</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="overflow-hidden rounded-lg shadow-2xl">
+      <img id="lightbox-img" src="" alt="" class="w-full max-h-[80vh] object-contain bg-black/60 transition-all duration-300">
+    </div>
+
+    <div class="mt-4 bg-black/60 p-4 rounded-lg">
+      <p id="lightbox-caption" class="text-white text-xl"></p>
+      <p class="text-gray-400 text-sm mt-2">Klicken Sie außerhalb des Bildes oder drücken Sie ESC zum Schließen</p>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox Script -->
+<script>
+  let currentImagePath = '';
+
+  function openLightbox(imgSrc, caption) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+
+    // Save the current image path for the "open in new window" feature
+    currentImagePath = '/img/screenshots/' + imgSrc;
+
+    // Preload image
+    const img = new Image();
+    img.src = currentImagePath;
+
+    img.onload = function() {
+      // Set image and caption
+      lightboxImg.src = currentImagePath;
+      lightboxCaption.textContent = caption;
+
+      // Show lightbox with animation
+      lightbox.classList.remove('opacity-0', 'pointer-events-none');
+      lightbox.querySelector('.max-w-4xl').classList.remove('scale-95');
+      lightbox.querySelector('.max-w-4xl').classList.add('scale-100');
+      document.body.style.overflow = 'hidden';
+    };
+  }
+
+  function openInNewWindow() {
+    // Open the current image in a new browser window
+    if (currentImagePath) {
+      window.open(currentImagePath, '_blank');
+    }
+  }
+
+  function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+
+    // Hide with animation
+    lightbox.classList.add('opacity-0');
+    lightbox.querySelector('.max-w-4xl').classList.remove('scale-100');
+    lightbox.querySelector('.max-w-4xl').classList.add('scale-95');
+
+    // After animation completes, disable pointer events
+    setTimeout(() => {
+      lightbox.classList.add('pointer-events-none');
+      document.body.style.overflow = 'auto';
+    }, 300);
+  }
+
+  // Close lightbox when clicking outside the content
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeLightbox();
+    }
+  });
+
+  // Close lightbox with Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+</script>

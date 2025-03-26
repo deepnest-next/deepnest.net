@@ -1,0 +1,219 @@
+<div class="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-900 dark:to-indigo-950 rounded-2xl p-8 shadow-lg my-12">
+  <!-- Hero Section -->
+  <div class="text-center mb-10">
+    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4" id="goto-download">{{ 'downloads.latest_version' | t }}</h2>
+    <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+      {{ 'downloads.latest_version_desc' | t }}
+    </p>
+    <div class="flex justify-center mt-6">
+      <a href="#download-options" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-full transition-all flex items-center gap-2 transform hover:scale-105">
+        <svg class="size-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 3a.75.75 0 0 1 .75.75v8.69l3.22-3.22a.75.75 0 0 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.22 3.22V3.75A.75.75 0 0 1 10 3z" clip-rule="evenodd" />
+        </svg>
+        {{ 'downloads.download_now' | t }}
+      </a>
+    </div>
+  </div>
+
+  <!-- Download List Section -->
+  <div id="download-options" class="mt-8">
+    {% if assets and assets.length > 0 %}
+      <ul role="list" class="divide-y dark:divide-gray-700 divide-gray-200 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
+        {%- for asset in assets %}
+          <li class="flex items-center justify-between py-5 px-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <div class="flex w-0 flex-1 items-center">
+              {% if 'darwin' in asset.name %}
+                <!-- macOS icon -->
+                <div class="flex-shrink-0 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 p-2 mr-4">
+                  <svg class="size-6 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-.999-2.04.08-3.912 1.183-4.961 3.015-2.117 3.675-.539 9.114 1.519 12.087 1.009 1.465 2.208 3.095 3.792 3.035 1.52-.06 2.09-.987 3.935-.987 1.831 0 2.35.987 3.959.948 1.637-.029 2.678-1.495 3.677-2.969 1.158-1.703 1.637-3.347 1.667-3.436-.039-.019-3.182-1.229-3.22-4.857-.029-3.035 2.468-4.496 2.587-4.575-1.419-2.094-3.626-2.333-4.4-2.392-2-.156-3.677 1.09-4.595 1.09z"/>
+                    <path d="M14.629 3.407c.84-1.01 1.399-2.427 1.247-3.83-1.207.049-2.674.807-3.534 1.827-.777.896-1.456 2.334-1.277 3.708 1.348.106 2.714-.688 3.564-1.705z"/>
+                  </svg>
+                </div>
+              {% elif 'win32' in asset.name %}
+                <!-- Windows icon -->
+                <div class="flex-shrink-0 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 p-2 mr-4">
+                  <svg class="size-6 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+                  </svg>
+                </div>
+              {% elif 'linux' in asset.name %}
+                <!-- Linux icon -->
+                <div class="flex-shrink-0 rounded-full bg-gradient-to-br from-yellow-600 to-orange-600 p-1 mr-4">
+                  <svg class="size-8 text-white" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+                    <path d="M40.164,35.629c-1.057-0.435-1.928-1.118-1.865-2.427c0.062-1.307-0.934-2.173-0.934-2.173
+                    s0.871-2.859,0.062-5.224c-0.809-2.364-3.481-6.155-5.533-9.014c-2.049-2.861-0.309-6.158-2.173-10.384
+                    c-1.866-4.225-6.714-3.978-9.326-2.174c-2.613,1.801-1.806,6.275-1.682,8.394c0.125,2.111,0.056,3.616-0.185,4.163
+                    c-0.245,0.546-1.926,2.552-3.047,4.229c-1.119,1.677-1.927,5.16-2.738,6.589c-0.808,1.431-0.248,2.735-0.248,2.735
+                    s-0.56,0.184-0.996,1.121c-0.436,0.93-1.305,1.365-2.859,1.673c-1.554,0.312-1.554,1.311-1.182,2.43
+                    c0.374,1.115,0.001,1.741-0.434,3.169c-0.436,1.425,1.74,1.865,3.853,2.109c2.115,0.25,4.477,1.618,6.469,1.866
+                    c1.987,0.25,2.61-1.367,2.61-1.367s2.238-0.499,4.598-0.559c2.365-0.062,4.598,0.497,4.598,0.497s0.437,0.994,1.244,1.429
+                    c0.81,0.436,2.551,0.498,3.669-0.681c1.121-1.183,4.105-2.672,5.781-3.606C41.529,37.488,41.222,36.061,40.164,35.629z
+                     M25.615,8.212c1.065,0,1.927,1.057,1.927,2.36c0,0.925-0.434,1.724-1.062,2.111c-0.162-0.07-0.33-0.142-0.51-0.218
+                    c0.378-0.188,0.649-0.672,0.649-1.235c0-0.734-0.455-1.33-1.017-1.33c-0.555,0-1.012,0.597-1.012,1.33
+                    c0,0.271,0.065,0.533,0.177,0.746c-0.332-0.131-0.637-0.254-0.876-0.344c-0.13-0.318-0.203-0.677-0.203-1.059
+                    C23.688,9.269,24.548,8.212,25.615,8.212z M25.477,13.188c0.532,0.185,1.126,0.532,1.064,0.875
+                    c-0.064,0.346-0.344,0.346-1.064,0.786c-0.723,0.438-2.288,1.407-2.788,1.471c-0.504,0.063-0.784-0.219-1.317-0.562
+                    c-0.532-0.344-1.535-1.163-1.282-1.599c0,0,0.781-0.598,1.124-0.91c0.345-0.314,1.223-1.064,1.755-0.966
+                    C23.501,12.372,24.943,13,25.477,13.188z M20.671,8.585c0.841,0,1.523,1.001,1.523,2.236c0,0.227-0.022,0.438-0.065,0.641
+                    c-0.205,0.07-0.413,0.183-0.615,0.354c-0.102,0.083-0.193,0.162-0.28,0.241c0.133-0.25,0.187-0.605,0.126-0.979
+                    c-0.113-0.674-0.562-1.167-1.008-1.097c-0.444,0.077-0.712,0.684-0.599,1.362c0.114,0.678,0.562,1.17,1.005,1.097
+                    c0.025-0.006,0.05-0.012,0.076-0.021c-0.217,0.208-0.417,0.388-0.62,0.54c-0.615-0.285-1.066-1.134-1.066-2.138
+                    C19.149,9.585,19.831,8.585,20.671,8.585z M19.03,39.998c-0.198,0.893-1.242,1.541-1.242,1.541
+                    c-0.946,0.297-3.577-0.845-4.769-1.345c-1.19-0.493-4.223-0.648-4.621-1.089c-0.394-0.451,0.198-1.442,0.35-2.384
+                    c0.147-0.949-0.297-1.541-0.15-2.188c0.15-0.645,2.087-0.645,2.831-1.09c0.746-0.449,0.895-1.74,1.49-2.087
+                    c0.596-0.351,1.688,0.892,2.136,1.59c0.446,0.692,2.135,3.674,2.83,4.419C18.583,38.111,19.228,39.108,19.03,39.998z
+                     M30.025,31.336c-0.181,0.876-0.181,4.043-0.181,4.043s-1.925,2.67-4.914,3.107c-2.983,0.437-4.477,0.122-4.477,0.122
+                    l-1.677-1.926c0,0,1.303-0.188,1.118-1.494c-0.188-1.305-3.978-3.108-4.663-4.726c-0.682-1.614-0.123-4.353,0.748-5.721
+                    c0.87-1.366,1.427-4.348,2.298-5.346c0.871-0.991,1.552-3.105,1.242-4.04c0,0,1.866,2.239,3.168,1.868
+                    c1.305-0.374,4.231-2.552,4.663-2.176c0.435,0.374,4.165,8.577,4.534,11.19c0.376,2.609-0.249,4.598-0.249,4.598
+                    S30.209,30.464,30.025,31.336z M39.566,37.192c-0.581,0.533-3.812,1.838-4.781,2.856c-0.964,1.009-2.223,1.831-2.992,1.592
+                    c-0.776-0.244-1.45-1.305-1.112-2.853c0.336-1.543,0.629-3.233,0.58-4.2c-0.047-0.967-0.244-2.273,0-2.467
+                    c0.241-0.188,0.625-0.094,0.625-0.094s-0.188,1.833,0.919,2.32c1.109,0.478,2.705-0.193,3.188-0.681
+                    c0.484-0.479,0.822-1.204,0.822-1.204s0.482,0.244,0.435,1.015c-0.048,0.772,0.336,1.886,1.064,2.271
+                    C39.036,36.128,40.147,36.664,39.566,37.192z"/>
+                  </svg>
+                </div>
+              {% else %}
+                <!-- Default file icon -->
+                <div class="flex-shrink-0 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 p-2 mr-4">
+                  <svg class="size-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2Z" />
+                  </svg>
+                </div>
+              {% endif %}
+
+              <div class="min-w-0 flex-1">
+                <div class="flex flex-col md:flex-row md:items-center gap-2">
+                  <span class="text-base font-semibold text-gray-900 dark:text-white truncate">{{asset.name}}</span>
+
+                  <div class="flex space-x-2">
+                    <!-- Size badge -->
+                    <span class="inline-flex items-center rounded-md bg-gray-100 dark:bg-gray-700 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300">
+                      {{asset.size | fileSize}}
+                    </span>
+
+                    <!-- Architecture badges -->
+                    {% if 'arm64' in asset.name %}
+                      <span class="inline-flex items-center rounded-md bg-purple-100 dark:bg-purple-900 px-2 py-1 text-xs font-medium text-purple-700 dark:text-purple-300">
+                        ARM64
+                      </span>
+                    {% elif 'x64' in asset.name %}
+                      <span class="inline-flex items-center rounded-md bg-blue-100 dark:bg-blue-900 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-300">
+                        x64/AMD64
+                      </span>
+                    {% elif 'x86' in asset.name %}
+                      <span class="inline-flex items-center rounded-md bg-teal-100 dark:bg-teal-900 px-2 py-1 text-xs font-medium text-teal-700 dark:text-teal-300">
+                        x86/i386
+                      </span>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  {% if 'darwin' in asset.name %}
+                    For macOS {% if 'arm64' in asset.name %}(Apple Silicon){% else %}(Intel){% endif %}
+                  {% elif 'win32' in asset.name %}
+                    For Windows {% if 'arm64' in asset.name %}(ARM){% else %}(Intel/AMD){% endif %}
+                  {% elif 'linux' in asset.name %}
+                    For Linux {% if 'arm64' in asset.name %}(ARM){% else %}(Intel/AMD){% endif %}
+                  {% else %}
+                    {{ 'downloads.generic_file' | t }}
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+
+            <div class="ml-4 flex-shrink-0 flex items-center gap-4">
+              <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700 dark:bg-green-900 dark:text-green-300">
+                <svg class="mr-1 size-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                  <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                </svg>
+                {{ asset.download_count }}
+              </span>
+
+              <a href="{{ asset.browser_download_url }}" class="inline-flex items-center gap-1 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                <svg class="size-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+                {{ 'downloads.download' | t }}
+              </a>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <!-- System Requirements & Help -->
+      <div class="mt-8 grid md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-white">{{ 'downloads.system_requirements' | t  }}</h3>
+          <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <li class="flex items-center">
+              <svg class="size-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              {{ 'downloads.min_cpu' | t }}
+            </li>
+            <li class="flex items-center">
+              <svg class="size-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              {{ 'downloads.min_ram' | t }}
+            </li>
+            <li class="flex items-center">
+              <svg class="size-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              {{ 'downloads.min_disk' | t }}
+            </li>
+            <li class="flex items-center">
+              <svg class="size-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              {{ 'downloads.os_support' | t }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-white">{{ 'downloads.need_help' | t }}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            {{ 'downloads.help_text' | t }}
+          </p>
+          <div class="flex space-x-4">
+            <a href="https://github.com/deepnest-next/deepnest/issues" class="text-indigo-600 hover:text-indigo-500 text-sm font-medium flex items-center">
+              <svg class="size-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+              </svg>
+              {{ 'downloads.get_support' | t }}
+            </a>
+            <a href="https://github.com/deepnest-next/deepnest" class="text-indigo-600 hover:text-indigo-500 text-sm font-medium flex items-center">
+              <svg class="size-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+              </svg>
+              {{ 'downloads.view_source' | t }}
+            </a>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow text-center">
+        <svg class="size-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="text-lg text-gray-700 dark:text-gray-300">{{ 'downloads.no_files' | t }}</p>
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ 'downloads.check_back' | t }}</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="mt-8 text-center pt-6 border-t border-gray-200 dark:border-gray-700">
+    <a href="https://github.com/deepnest-next/deepnest/releases" class="inline-flex items-center text-indigo-600 hover:text-indigo-500 font-medium">
+      <svg class="size-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+      </svg>
+      {{ 'downloads.view_all_releases' | t }}
+    </a>
+  </div>
+</div>

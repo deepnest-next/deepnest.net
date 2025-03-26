@@ -1,5 +1,6 @@
 export default {
 	lang: "de",
+  draft: true,
 	layout: "layouts/post.njk",
 	permalink: function (data) {
 		// Slug override for localized URL slugs

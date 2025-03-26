@@ -6,7 +6,7 @@ import markedLinkifyIt from "marked-linkify-it";
 marked.use(markedBidi());
 marked.use(markedAlert());
 
-var debug = true;
+var debug = false;
 
 const schemas = {
 	'@': {
@@ -123,6 +123,32 @@ export default function (eleventyConfig) {
 	eleventyConfig.addNunjucksGlobal("unixtime", function () {
 		return new Date().getTime()
 	});
+
+  eleventyConfig.addFilter("getByURL", function (data, url) {
+    return data.find((x) => x.url == url)
+  });
+
+  eleventyConfig.addFilter("mapWithLang", function (data) {
+    return data.map((x) => {
+      return {
+        url: x.url,
+        lang: x.data.page.lang
+      }
+    });
+  });
+
+  eleventyConfig.addFilter("getByNotPageLang", function (data, lang) {
+    if (!lang) return data.filter((x) => x.page.lang != this.page.lang)
+    return data.filter((x) => x.data.page.lang != lang)
+  });
+
+  eleventyConfig.addFilter("getByPageID", function (data, pageID) {
+    return data.filter((x) => {
+      //x.page.url.toString().includes('release') && console.log(x.page.url , Object.keys(x.data.eleventyComputed), x.data)
+      //console.log({url: x.page.url, xPageID:x.eleventyComputed.pageID, pageID})
+      return x.data.pageID == pageID
+    });
+  });
 
 	eleventyConfig.addNunjucksGlobal("checkLangInUrls", function (lang, urls) {
 		return urls.filter((x) => x.lang == lang).length > 0

@@ -4,15 +4,141 @@ subtitle: "For plotters, laser & plasma cutting machines and other CNC machines"
 eleventyNavigation:
   key: "Home"
   order: 1
-numberOfLatestPostsToShow: 3
 ---
 
+<section>
+	<h2 class="text-3xl font-bold ">deepnest-next {{ githubData.releases[0].tag_name }} <span class="ml-2 align-top inline-block rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-300">stable</span></h2>
+	<p class="text-xl my-4">What current features and functions does deepnest offer?</p>
+	<div class="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+		<div class="rounded-lg bg-gray-50/75 dark:bg-gray-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-110 hover:z-10">
+			<div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
+				</svg>
+			</div>
+			<h3 class="mb-2 text-lg font-semibold dark:text-white">Optimal material utilization</h3>
+			<p class="text-gray-600 dark:text-gray-300">Maximize efficiency by automatically positioning parts and minimizing waste.</p>
+		</div>
 
-{# List every content page in the project #}
-{#
-<ul>
-	{%- for entry in collections.all %}
-	<li><a href="{{ entry.url }}"><code>{{ entry.url }}</code></a></li>
-	{%- endfor %}
-</ul>
-#}
+		<div class="rounded-lg bg-gray-50/75 dark:bg-gray-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-110 hover:z-10">
+			<div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+				</svg>
+			</div>
+			<h3 class="mb-2 text-lg font-semibold dark:text-white">Intuitive design</h3>
+			<p class="text-gray-600 dark:text-gray-300">Simple user interface for quick set-up and efficient working with your projects.</p>
+		</div>
+
+		<div class="rounded-lg bg-gray-50/75 dark:bg-gray-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-110 hover:z-10">
+			<div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+				</svg>
+			</div>
+			<h3 class="mb-2 text-lg font-semibold dark:text-white">Versatile formats</h3>
+			<p class="text-gray-600 dark:text-gray-300">Supports common file formats such as SVG, DXF and more for seamless compatibility.</p>
+		</div>
+
+		<div class="rounded-lg bg-gray-50/75 dark:bg-gray-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-110 hover:z-10">
+			<div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+				</svg>
+			</div>
+			<h3 class="mb-2 text-lg font-semibold dark:text-white">Powerful algorithms</h3>
+			<p class="text-gray-600 dark:text-gray-300">Advanced nesting algorithms for complex shapes and optimal arrangements.</p>
+		</div>
+
+		<div class="rounded-lg bg-gray-50/75 dark:bg-gray-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-110 hover:z-10">
+			<div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-300">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+				</svg>
+			</div>
+			<h3 class="mb-2 text-lg font-semibold dark:text-white">Saves time and money</h3>
+			<p class="text-gray-600 dark:text-gray-300">Reduce material waste and production time through optimized planning.</p>
+		</div>
+
+		<div class="rounded-lg bg-gray-50/75 dark:bg-gray-800 p-6 shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-110 hover:z-10">
+			<div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+				</svg>
+			</div>
+			<h3 class="mb-2 text-lg font-semibold dark:text-white">Regular updates</h3>
+			<p class="text-gray-600 dark:text-gray-300">The software is actively developed with regular improvements and updates. Based on the <a href="https://www.deepnest.io/" class="text-orange-600 hover:bg-orange-100 hover:dark:bg-orange-900 dark:text-orange-300">original project</a>, we offer continuous maintenance and new functions.</p>
+		</div>
+	</div>
+</section>
+
+<!-- New Screenshot Gallery Section -->
+<section class="my-16">
+  <h2 class="text-3xl font-bold mb-8">Screenshots</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Screenshot 1 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('Screenshot_2025-03-23_002455.png', 'Main view of the application')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/Screenshot_2025-03-23_002455.png" width="354" alt="Main view of the application" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-xl dark:text-white">Main view of the application</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screenshot 2 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('parts2.png', 'File import and export')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/parts2.png" width="354" alt="File import and export" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-xl dark:text-white">File import and export</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screenshot 3 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('nesting_results.png', 'Nesting results')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/nesting_results.png" width="354" alt="Nesting results" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-xl dark:text-white">Nesting results</p>
+        </div>
+      </div>
+    </div>
+    <!-- Screenshot 4 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings.png', 'Settings')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/settings.png" width="354" alt="Settings" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-xl dark:text-white">Settings</p>
+        </div>
+      </div>
+    </div>
+    <!-- Screenshot 5 -->
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings2.png', 'Settings 2')">
+      <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
+        <div class="relative pb-[75%] overflow-hidden">
+          <img src="/img/screenshots/settings2.png" width="354" alt="Settings 2" class="absolute inset-0 w-full h-full object-cover">
+        </div>
+        <div class="text-center pt-4 pb-2 px-2">
+          <p class="font-handwriting text-xl dark:text-white">Settings 2</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="my-16">
+{% if githubData.releases.length > 0 %}
+  {% set assets = githubData.releases[0].assets %}
+  {% include "downloadlist.njk" %}
+{% endif %}
+</section>

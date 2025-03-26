@@ -1,6 +1,8 @@
 ---
 title: Nutzungs- und Geschäftsbedingungen
 slugOverride: Nutzungs- und Geschäftsbedingungen
+draft: true
+eleventyExcludeFromCollections: true
 eleventyNavigation:
   key: tos
   parent: imprint

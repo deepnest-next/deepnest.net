@@ -3,12 +3,16 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import { eleventyImageOnRequestDuringServePlugin } from "@11ty/eleventy-img";
 import automaticNoopener from 'eleventy-plugin-automatic-noopener';
 import addRemoteData from "@aaashur/eleventy-plugin-add-remote-data";
+
+import i18nPlugin from "eleventy-i18n";
+import translations from "./_locale/index.js";
 /*
 import intlUtils from '@pcdevil/eleventy-plugin-intl-utils';
 const intlUtilConfig = {
-		locale: 'en-GB',
+    locale: 'en-GB',
 };
 eleventyConfig.addPlugin(intlUtils, intlUtilConfig);
 */
@@ -32,224 +36,248 @@ import defaultSettings from "./config.page.json" with { type: "json" };
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 export default async function (eleventyConfig) {
-	//eleventyConfig.setFreezeReservedData(false);
-	// Drafts, see also _data/eleventyDataSchema.js
-	eleventyConfig.addPreprocessor("drafts", "*", (data, content) => {
-		if (data.draft && process.env.ELEVENTY_RUN_MODE === "build") {
-			return false;
-		}
-		if (data.draft && process.env.BUILD_MODE === "production") {
-			return false;
-		}
-	});
-	eleventyConfig.setWatchThrottleWaitTime(500);
-	eleventyConfig.setChokidarConfig({
-		usePolling: true,
-		interval: 500,
-	});
+  //eleventyConfig.setFreezeReservedData(false);
+  // Drafts, see also _data/eleventyDataSchema.js
+  eleventyConfig.addPreprocessor("drafts", "*", (data, content) => {
+    if (data.draft && process.env.ELEVENTY_RUN_MODE === "build") {
+      return false;
+    }
+    if (data.draft && process.env.BUILD_MODE === "production") {
+      return false;
+    }
+  });
+  eleventyConfig.setWatchThrottleWaitTime(500);
+  eleventyConfig.setChokidarConfig({
+    usePolling: true,
+    interval: 500,
+  });
 
-	// Copy the contents of the `public` folder to the output folder
-	// For example, `./public/css/` ends up in `_site/css/`
-	eleventyConfig
-		.addPassthroughCopy({
-			"./public/": "/"
-		}, {})
-		.addPassthroughCopy("./content/en/feed/pretty-atom-feed.xsl")
-		.addPassthroughCopy("./content/de/feed/pretty-atom-feed.xsl")
-		.addPassthroughCopy("./content/nl/feed/pretty-atom-feed.xsl");
+  // Copy the contents of the `public` folder to the output folder
+  // For example, `./public/css/` ends up in `_site/css/`
+  eleventyConfig
+    .addPassthroughCopy({
+      "./content/img": "/img/"
+    })
+    .addPassthroughCopy("./content/apple-touch-icon.png")
+    .addPassthroughCopy("./content/favicon.ico")
+    .addPassthroughCopy("./content/favicon-16x16.png")
+    .addPassthroughCopy("./content/favicon-32x32.png")
+    .addPassthroughCopy("./content/android-chrome-192x192.png")
+    .addPassthroughCopy("./content/android-chrome-512x512.png")
+    .addPassthroughCopy("./content/site.webmanifest")
+    .addPassthroughCopy("./content/en/feed/pretty-atom-feed.xsl")
+    .addPassthroughCopy("./content/de/feed/pretty-atom-feed.xsl")
+    .addPassthroughCopy("./content/nl/feed/pretty-atom-feed.xsl");
 
-	// Run Eleventy when these files change:
-	// https://www.11ty.dev/docs/watch-serve/#add-your-own-watch-targets
+  // Run Eleventy when these files change:
+  // https://www.11ty.dev/docs/watch-serve/#add-your-own-watch-targets
 
-	// Watch images for the image pipeline.
-	eleventyConfig.addWatchTarget("./{content,public}/**/*.{svg,webp,png,jpg,jpeg,gif}");
+  // Watch images for the image pipeline.
+  eleventyConfig.addWatchTarget("./public/**/*.{svg,webp,png,jpg,jpeg,gif}");
 
-	// Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
-	// Adds the {% css %} paired shortcode
-	eleventyConfig.addBundle("css", {
-		toFileDirectory: "css/gen",
-		hoist: true,
-		transforms: [
-			async function (content) {
-				// type contains the bundle name.
-				let { type, page } = this;
-				let result = await postcss([postcssNested(), tailwindcss()/*TODO: later, fullwindcss*/]).process(content, { from: page.inputPath, to: null });
-				return result.css;
-			}
-		]
-	});
+  // Per-page bundles, see https://github.com/11ty/eleventy-plugin-bundle
+  // Adds the {% css %} paired shortcode
+  eleventyConfig.addBundle("css", {
+    toFileDirectory: "css/gen",
+    hoist: true,
+    transforms: [
+      async function (content) {
+        // type contains the bundle name.
+        let { type, page } = this;
+        let result = await postcss([postcssNested(), tailwindcss()/*TODO: later, fullwindcss*/]).process(content, { from: page.inputPath, to: null });
+        return result.css;
+      }
+    ]
+  });
 
-	eleventyConfig.addNunjucksAsyncFilter("postCSS", function (value, callback) {
-		let { type, page } = this;
-		postcss([
-			postcssNested(), tailwindcss()
-		])
-			.process(value, { from: undefined, to: null })
-			.then(function (result) {
-				callback(null, result.css);
-			});
-	});
-	// Adds the {% js %} paired shortcode
-	eleventyConfig.addBundle("js", {
-		toFileDirectory: "js/gen",
-	});
+  eleventyConfig.addNunjucksAsyncFilter("postCSS", function (value, callback) {
+    let { type, page } = this;
+    postcss([
+      postcssNested(), tailwindcss()
+    ])
+      .process(value, { from: undefined, to: null })
+      .then(function (result) {
+        callback(null, result.css);
+      });
+  });
+  // Adds the {% js %} paired shortcode
+  eleventyConfig.addBundle("js", {
+    toFileDirectory: "js/gen",
+  });
 
-	// Official plugins
-	eleventyConfig.addPlugin(EleventyI18nPlugin, {
-		// any valid BCP 47-compatible language tag is supported
-		defaultLanguage: defaultSettings.defaultLanguage, // Required, this site uses "en"
+  // Official plugins
+  eleventyConfig.addPlugin(EleventyI18nPlugin, {
+    // any valid BCP 47-compatible language tag is supported
+    defaultLanguage: defaultSettings.defaultLanguage, // Required, this site uses "en"
 
-		// Rename the default universal filter names
-		filters: {
-			// transform a URL with the current page’s locale code
-			url: "locale_url",
+    // Rename the default universal filter names
+    filters: {
+      // transform a URL with the current page’s locale code
+      url: "locale_url",
 
-			// find the other localized content for a specific input file
-			links: "locale_links",
-		},
+      // find the other localized content for a specific input file
+      links: "locale_links",
+    },
 
-		// When to throw errors for missing localized content files
-		// errorMode: "strict", // throw an error if content is missing at /en/slug
-		//errorMode: "allow-fallback", // only throw an error when the content is missing at both /en/slug and /slug
-		errorMode: "never", // don’t throw errors for missing content
-	});
-	eleventyConfig.addPlugin(pluginSyntaxHighlight, {
-		preAttributes: { tabindex: 0 }
-	});
-	eleventyConfig.addPlugin(pluginNavigation);
-	eleventyConfig.addPlugin(HtmlBasePlugin);
-	eleventyConfig.addPlugin(InputPathToUrlTransformPlugin);
-	eleventyConfig.addPlugin(EleventyRenderPlugin);
-	eleventyConfig.addPlugin(automaticNoopener);
-	eleventyConfig.addPlugin(addRemoteData, {
-		data: {
-			robots: "https://api.ashur.cab/robots/v2.json"
-		},
-	});
-	eleventyConfig.addPlugin(editOnGithub, {
-		// required
-		github_edit_repo: 'https://github.com/deepnest-next/deepnest.net',
-		// optional: defaults
-		github_edit_path: undefined, // non-root location in git url. root is assumed
-		github_edit_branch: 'devel',
-		github_edit_text: 'Edit on Github', // html accepted, or javascript function: (page) => { return page.inputPath}
-		github_edit_class: 'edit-on-github',
-		github_edit_tag: 'a',
-		github_edit_attributes: 'target="_blank" rel="noopener"',
-		github_edit_wrapper: undefined, //ex: "<div stuff>${edit_on_github}</div>"
-	});
-	eleventyConfig.addPlugin(embeds);
-	eleventyConfig.addPlugin(footnotes, { title: "Footnotes" /* TODO: fork and make multilingual … */ })
+    // When to throw errors for missing localized content files
+    // errorMode: "strict", // throw an error if content is missing at /en/slug
+    //errorMode: "allow-fallback", // only throw an error when the content is missing at both /en/slug and /slug
+    errorMode: "never", // don’t throw errors for missing content
+  });
+  eleventyConfig.addPlugin(i18nPlugin, {
+    fallbackLanguageTag: 'en',
+    translations: translations,
+    keySeparator: '.'
+  });
+  eleventyConfig.addPlugin(pluginSyntaxHighlight, {
+    preAttributes: { tabindex: 0 }
+  });
+  eleventyConfig.addPlugin(pluginNavigation);
+  eleventyConfig.addPlugin(HtmlBasePlugin);
+  eleventyConfig.addPlugin(InputPathToUrlTransformPlugin);
+  eleventyConfig.addPlugin(EleventyRenderPlugin);
+  eleventyConfig.addPlugin(automaticNoopener);
+  eleventyConfig.addPlugin(addRemoteData, {
+    data: {
+      robots: "https://api.ashur.cab/robots/v2.json"
+    },
+  });
+  eleventyConfig.addPlugin(editOnGithub, {
+    // required
+    github_edit_repo: 'https://github.com/deepnest-next/deepnest.net',
+    // optional: defaults
+    github_edit_path: undefined, // non-root location in git url. root is assumed
+    github_edit_branch: 'devel',
+    github_edit_text: 'Edit on Github', // html accepted, or javascript function: (page) => { return page.inputPath}
+    github_edit_class: 'edit-on-github',
+    github_edit_tag: 'a',
+    github_edit_attributes: 'target="_blank" rel="noopener"',
+    github_edit_wrapper: undefined, //ex: "<div stuff>${edit_on_github}</div>"
+  });
+  eleventyConfig.addPlugin(embeds);
+  eleventyConfig.addPlugin(footnotes, { title: "Footnotes" /* TODO: fork and make multilingual … */ })
+
+  if (defaultSettings.enableFeed) {
+    for (let locale of defaultSettings.languages) {
+      eleventyConfig.addPlugin(feedPlugin, {
+        type: "atom", // or "rss", "json"
+        outputPath: `/${locale}/feed/feed.xml`,
+        stylesheet: "pretty-atom-feed.xsl",
+        templateData: {
+          eleventyNavigation: {
+            key: "Feed",
+            order: 999
+          }
+        },
+        collection: {
+          name: `blog_${locale}`,
+          limit: 10,
+        },
+        metadata: {
+          language: locale,
+          title: `deepnest.net - The deepnest-next Blog (${locale})`,
+          subtitle: "This is a longer description about your blog.",
+          base: "https://www.deepnest.net/",
+          author: {
+            name: "Josef Fröhle"
+          }
+        }
+      });
+    }
+  }
+
+  // Image optimization: https://www.11ty.dev/docs/plugins/image/#eleventy-transform
+  eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
+    // Output formats for each image.
+    formats: ["avif", "png", "webp", "auto"],
+
+    widths: [354, "auto"],
+    useCache: true,
+
+    failOnError: true,
+    htmlOptions: {
+      imgAttributes: {
+        // e.g. <img loading decoding> assigned on the HTML tag will override these values.
+        loading: "lazy",
+        decoding: "async",
+      },
+      pictureAttributes: {}
+    },
+
+    sharpOptions: {
+      animated: true,
+    },
+  });
+
+  eleventyConfig.addPlugin(eleventyImageOnRequestDuringServePlugin);
+
+  // Filters
+  eleventyConfig.addPlugin(pluginFilters);
+
+  eleventyConfig.addPlugin(IdAttributePlugin, {
+    // by default we use Eleventy’s built-in `slugify` filter:
+    // slugify: eleventyConfig.getFilter("slugify"),
+    // selector: "h1,h2,h3,h4,h5,h6", // default
+    filter: function ({ page }) {
+      if (page.inputPath.endsWith("blog/index.njk") || page.inputPath.endsWith("blog/archive.njk")) {
+        return false; // skip
+      }
+
+      return true;
+    }
+  });
 
 
-	for (let locale of defaultSettings.languages) {
-		eleventyConfig.addPlugin(feedPlugin, {
-			type: "atom", // or "rss", "json"
-			outputPath: `/${locale}/feed/feed.xml`,
-			stylesheet: "pretty-atom-feed.xsl",
-			templateData: {
-				eleventyNavigation: {
-					key: "Feed",
-					order: 999
-				}
-			},
-			collection: {
-				name: `blog_${locale}`,
-				limit: 10,
-			},
-			metadata: {
-				language: locale,
-				title: `deepnest.net - The deepnest-next Blog (${locale})`,
-				subtitle: "This is a longer description about your blog.",
-				base: "https://www.deepnest.net/",
-				author: {
-					name: "Josef Fröhle"
-				}
-			}
-		});
-	}
+  eleventyConfig.addPlugin(externalLinks, { 'url': 'https://www.deepnest.net' });
 
-	// Image optimization: https://www.11ty.dev/docs/plugins/image/#eleventy-transform
-	eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
-		// Output formats for each image.
-		formats: ["avif", "webp", "auto"],
+  eleventyConfig.addShortcode("currentBuildDate", () => {
+    return (new Date()).toISOString();
+  });
 
-		// widths: ["auto"],
+  // Features to make your build faster (when you need them)
 
-		failOnError: false,
-		htmlOptions: {
-			imgAttributes: {
-				// e.g. <img loading decoding> assigned on the HTML tag will override these values.
-				loading: "lazy",
-				decoding: "async",
-			}
-		},
+  // If your passthrough copy gets heavy and cumbersome, add this line
+  // to emulate the file copy on the dev server. Learn more:
+  // https://www.11ty.dev/docs/copy/#emulate-passthrough-copy-during-serve
 
-		sharpOptions: {
-			animated: true,
-		},
-	});
-
-	// Filters
-	eleventyConfig.addPlugin(pluginFilters);
-
-	eleventyConfig.addPlugin(IdAttributePlugin, {
-		// by default we use Eleventy’s built-in `slugify` filter:
-		// slugify: eleventyConfig.getFilter("slugify"),
-		// selector: "h1,h2,h3,h4,h5,h6", // default
-	});
-
-
-	eleventyConfig.addPlugin(externalLinks, { 'url': 'https://www.deepnest.net' });
-
-	eleventyConfig.addShortcode("currentBuildDate", () => {
-		return (new Date()).toISOString();
-	});
-
-	// Features to make your build faster (when you need them)
-
-	// If your passthrough copy gets heavy and cumbersome, add this line
-	// to emulate the file copy on the dev server. Learn more:
-	// https://www.11ty.dev/docs/copy/#emulate-passthrough-copy-during-serve
-
-	eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
+  eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
 };
 
 export const config = {
-	// Control which files Eleventy will process
-	// e.g.: *.md, *.njk, *.html, *.liquid
-	templateFormats: [
-		"md",
-		"njk",
-		"html",
-		"liquid",
-		"11ty.js",
-	],
+  // Control which files Eleventy will process
+  // e.g.: *.md, *.njk, *.html, *.liquid
+  templateFormats: [
+    "md",
+    "njk",
+    "html",
+    "liquid",
+    "11ty.js",
+  ],
 
-	// Pre-process *.md files with: (default: `liquid`)
-	markdownTemplateEngine: "njk",
+  // Pre-process *.md files with: (default: `liquid`)
+  markdownTemplateEngine: "njk",
 
-	// Pre-process *.html files with: (default: `liquid`)
-	htmlTemplateEngine: "njk",
+  // Pre-process *.html files with: (default: `liquid`)
+  htmlTemplateEngine: "njk",
 
-	// These are all optional:
-	dir: {
-		input: "content",          // default: "."
-		includes: "../_includes",  // default: "_includes" (`input` relative)
-		data: "../_data",          // default: "_data" (`input` relative)
-		output: "_site"
-	},
+  // These are all optional:
+  dir: {
+    input: "content",          // default: "."
+    includes: "../_includes",  // default: "_includes" (`input` relative)
+    data: "../_data",          // default: "_data" (`input` relative)
+    output: "_site"
+  },
 
-	// -----------------------------------------------------------------
-	// Optional items:
-	// -----------------------------------------------------------------
+  // -----------------------------------------------------------------
+  // Optional items:
+  // -----------------------------------------------------------------
 
-	// If your site deploys to a subdirectory, change `pathPrefix`.
-	// Read more: https://www.11ty.dev/docs/config/#deploy-to-a-subdirectory-with-a-path-prefix
+  // If your site deploys to a subdirectory, change `pathPrefix`.
+  // Read more: https://www.11ty.dev/docs/config/#deploy-to-a-subdirectory-with-a-path-prefix
 
-	// When paired with the HTML <base> plugin https://www.11ty.dev/docs/plugins/html-base/
-	// it will transform any absolute URLs in your HTML to include this
-	// folder name and does **not** affect where things go in the output folder.
+  // When paired with the HTML <base> plugin https://www.11ty.dev/docs/plugins/html-base/
+  // it will transform any absolute URLs in your HTML to include this
+  // folder name and does **not** affect where things go in the output folder.
 
-	// pathPrefix: "/",
+  // pathPrefix: "/",
 };
