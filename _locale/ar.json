@@ -1,0 +1,45 @@
+{
+  "menu": {
+    "imprint": "Legal Notice",
+    "privacy": "Privacy Policy",
+    "tos": "Terms of use and business conditions",
+    "contact": "Contact"
+  },
+  "common": {
+    "allrightsreserved": "All rights reserved.",
+    "alsoavailablein": "Also available in:"
+  },
+  "releaselist": {
+    "released_on": "Release date",
+    "release_manager": "Release manager",
+    "release_notice": "Notice",
+    "downloads": "Downloads",
+    "attachments": "Attachments",
+    "version": "Version",
+    "download": "Download",
+    "readmore": "Mehr lesen",
+    "releases": "Veröffentlichungen",
+    "latest": "latest",
+    "oldest": "oldest",
+    "showmore": "Mehr anzeigen",
+    "showless": "Weniger anzeigen"
+  },
+  "downloads": {
+    "latest_version": "Latest version",
+    "download": "Download",
+    "view_all_releases": "View all releases",
+    "view_source": "View source",
+    "check_back": "Please check back later or visit our repository.",
+    "get_support": "Get support",
+    "help_text": "Having trouble with installation or using deepnest-next? Check out our documentation or join our community.",
+    "need_help": "Need help?",
+    "os_support": "Windows 10+, macOS 10.14+ or modern Linux",
+    "min_disk": "500MB free disk space",
+    "min_ram": "4GB RAM or more",
+    "min_cpu": "Quad-core CPU or better",
+    "system_requirements": "System Requirements",
+    "download_now": "Download now",
+    "generic_file": "Download file",
+    "latest_version_desc": "Experience the power of deepnest-next with our latest version. Optimize your cutting layouts and save material costs with just a few clicks."
+  }
+}
