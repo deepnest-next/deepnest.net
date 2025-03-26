@@ -12,6 +12,7 @@ export default {
 	title: "deepnest-next",
 	url: URLS[process.env.BUILD_MODE] || URLS.development,
 	language: defaultSettings.defaultLanguage,
+  supportedLanguages: defaultSettings.languages,
 	description: "I am writing about my experiences as a naval navel-gazer.",
 	author: {
 		name: "Josef Fröhle",

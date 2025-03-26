@@ -1,4 +1,4 @@
-<div class="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-900 dark:to-indigo-950 rounded-2xl p-8 shadow-lg my-12">
+<div class="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-gray-900 dark:to-indigo-950 rounded-2xl p-4 sm:p-8 shadow-lg my-12">
   <!-- Hero Section -->
   <div class="text-center mb-10">
     <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4" id="goto-download">{{ 'downloads.latest_version' | t }}</h2>
@@ -20,8 +20,8 @@
     {% if assets and assets.length > 0 %}
       <ul role="list" class="divide-y dark:divide-gray-700 divide-gray-200 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
         {%- for asset in assets %}
-          <li class="flex items-center justify-between py-5 px-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-            <div class="flex w-0 flex-1 items-center">
+          <li class="flex flex-col sm:flex-row sm:items-center justify-between py-5 px-3 sm:px-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors gap-4">
+            <div class="flex w-full sm:w-0 sm:flex-1 items-center">
               {% if 'darwin' in asset.name %}
                 <!-- macOS icon -->
                 <div class="flex-shrink-0 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 p-2 mr-4">
@@ -84,10 +84,10 @@
               {% endif %}
 
               <div class="min-w-0 flex-1">
-                <div class="flex flex-col md:flex-row md:items-center gap-2">
-                  <span class="text-base font-semibold text-gray-900 dark:text-white truncate">{{asset.name}}</span>
+                <div class="flex flex-col gap-2">
+                  <span class="text-base font-semibold text-gray-900 dark:text-white truncate break-all sm:break-normal">{{asset.name}}</span>
 
-                  <div class="flex space-x-2">
+                  <div class="flex flex-wrap gap-2">
                     <!-- Size badge -->
                     <span class="inline-flex items-center rounded-md bg-gray-100 dark:bg-gray-700 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-300">
                       {{asset.size | fileSize}}
@@ -124,7 +124,7 @@
               </div>
             </div>
 
-            <div class="ml-4 flex-shrink-0 flex items-center gap-4">
+            <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto sm:ml-4 gap-3">
               <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-700 dark:bg-green-900 dark:text-green-300">
                 <svg class="mr-1 size-3" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -133,7 +133,7 @@
                 {{ asset.download_count }}
               </span>
 
-              <a href="{{ asset.browser_download_url }}" class="inline-flex items-center gap-1 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+              <a href="{{ asset.browser_download_url }}" class="flex-grow sm:flex-grow-0 inline-flex items-center justify-center gap-1 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                 <svg class="size-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
@@ -145,7 +145,7 @@
       </ul>
 
       <!-- System Requirements & Help -->
-      <div class="mt-8 grid md:grid-cols-2 gap-6">
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
           <h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-white">{{ 'downloads.system_requirements' | t  }}</h3>
           <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-300">
