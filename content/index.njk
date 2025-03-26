@@ -10,46 +10,140 @@ permalink: /index.html
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Redirecting according to language</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+
+    .language-select {
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 5px;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .language-select a {
+      padding: 5px 10px;
+      margin: 0 5px;
+      color: #0066cc;
+      text-decoration: none;
+      border-radius: 3px;
+    }
+
+    .language-select a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 20px 0;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .message {
+      margin-top: 15px;
+      color: #666;
+    }
+  </style>
 </head>
 
 <body>
-  <div>
+  <div class="language-select">
+    <p>Choose your language / Wählen Sie Ihre Sprache:</p>
     {% for language in metadata.supportedLanguages %}
     <a href="/{{ language }}/">{{ language | localeName }}</a>{{ '' if loop.last else ' | ' }}
     {% endfor %}
   </div>
+
+  <div class="loader" id="loader"></div>
+  <div class="message" id="message">Detecting and redirecting to your preferred language...</div>
+
   <!-- Redirecting to according to browser language -->
   <script>
-    setTimeout(() => {
-      const sStorage = window.sessionStorage;
-      const availableLanguages = {{ metadata.supportedLanguages | safeJsonDump | safe }};
-      let storedLocale = sStorage.getItem('locale');
-      if (availableLanguages.includes(storedLocale)) {
-        let redirectUrl = `{{ '/' | url }}${storedLocale}/`;
-        window
-          .location
-          .replace(redirectUrl);
-      } else {
-        // source from https://gist.github.com/leipert/9586b796281faa5e27ed
-        const locale = [
-          ...(window.navigator.languages || []),
-          window.navigator.language,
-          window.navigator.browserLanguage,
-          window.navigator.userLanguage,
-          window.navigator.systemLanguage
-        ]
-          .filter(Boolean)
-          .map(language => language.substring(0, 2))
-          .find(language => availableLanguages.includes(language)) || "{{ metadata.language }}";
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        try {
+          const sStorage = window.sessionStorage;
+          const availableLanguages = {{ metadata.supportedLanguages | safeJsonDump | safe }};
+          const defaultLanguage = "{{ metadata.language }}";
 
-        let redirectUrl = `{{ '/' | url }}${locale}/`;
-        console.log("Redirecting to :" + redirectUrl);
-        sStorage.setItem('locale', locale);
-        window
-          .location
-          .replace(redirectUrl);
-      }
-    }, 0);
+          // Function to redirect to a specific language
+          function redirectToLanguage(lang) {
+            document.getElementById('message').textContent = `Redirecting to ${lang} version...`;
+            let redirectUrl = `{{ '/' | url }}${lang}/`;
+            console.log("Redirecting to: " + redirectUrl);
+            sStorage.setItem('locale', lang);
+
+            try {
+              window.location.replace(redirectUrl);
+
+              // Fallback if redirect fails
+              setTimeout(() => {
+                window.location.href = redirectUrl;
+              }, 1500);
+            } catch (e) {
+              console.error("Redirect failed:", e);
+              document.getElementById('message').textContent = `Redirect failed. Please click one of the language options above.`;
+              document.getElementById('loader').style.display = 'none';
+            }
+          }
+
+          let storedLocale = sStorage.getItem('locale');
+
+          // First check if we have a stored locale preference
+          if (availableLanguages.includes(storedLocale)) {
+            redirectToLanguage(storedLocale);
+          } else {
+            // Try to detect from browser settings
+            const browserLanguages = [
+              ...(window.navigator.languages || []),
+              window.navigator.language,
+              window.navigator.browserLanguage,
+              window.navigator.userLanguage,
+              window.navigator.systemLanguage
+            ]
+              .filter(Boolean)
+              .map(language => language.substring(0, 2));
+
+            console.log("Detected browser languages:", browserLanguages);
+
+            // Find the first language that's in our available languages
+            const detectedLocale = browserLanguages.find(language =>
+              availableLanguages.includes(language)
+            ) || defaultLanguage;
+
+            redirectToLanguage(detectedLocale);
+          }
+        } catch (error) {
+          console.error("Error during language detection:", error);
+          document.getElementById('message').textContent = `An error occurred. Please select a language manually.`;
+          document.getElementById('loader').style.display = 'none';
+        }
+      }, 500); // Small delay to ensure page is loaded
+    });
   </script>
 </body>
 
