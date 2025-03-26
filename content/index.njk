@@ -11,10 +11,15 @@ permalink: /index.html
 		<title>Redirecting according to language</title>
 	</head>
 	<body>
+    <a href="/en/">{{ 'en' | localeName}}</a> <br>
+    {% set lanugages = "/en/"|locale_url('en')|locale_links %}
+				{%- for lang in lanugages -%}
+					<a href="{{ lang.lang }}">{{lang.lang | localeName}}</a> {{ '' if loop.last else '<br>' }}
+				{%- endfor -%}
 		<!-- Redirecting to according to browser language -->
 		<script>
 			const sStorage = window.sessionStorage;
-			const availableLanguages = [{% set lanugages = "/en/"|locale_url('en')|locale_links %}
+			const availableLanguages = [
 				{%- for lang in lanugages -%}
 					"{{ lang.lang }}" {{ '' if loop.last else ',' }}
 				{%- endfor -%}];
