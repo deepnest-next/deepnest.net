@@ -11,6 +11,7 @@ permalink: /index.html
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Redirecting according to language</title>
   <style>
+    {%- set css %}
     body {
       font-family: Arial, sans-serif;
       display: flex;
@@ -67,6 +68,8 @@ permalink: /index.html
       margin-top: 15px;
       color: #666;
     }
+    {% endset -%}
+    {{- css | postCSS | cssmin | safe -}}
   </style>
 </head>
 
@@ -83,6 +86,7 @@ permalink: /index.html
 
   <!-- Redirecting to according to browser language -->
   <script>
+  {%- set js %}
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         try {
@@ -144,6 +148,8 @@ permalink: /index.html
         }
       }, 500); // Small delay to ensure page is loaded
     });
+    {% endset -%}
+    {{- js | jsmin | safe -}}
   </script>
 </body>
 

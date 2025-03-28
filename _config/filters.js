@@ -1,4 +1,7 @@
 import Image from "@11ty/eleventy-img";
+import { minify } from "terser";
+import CleanCSS from "clean-css";
+import htmlmin from "html-minifier-terser";
 import { DateTime } from "luxon";
 import { marked } from 'marked';
 import markedBidi from "marked-bidi";
@@ -312,5 +315,33 @@ export default function (eleventyConfig) {
         fallback: "largest",
 			}
 		});
+	});
+
+  eleventyConfig.addFilter("jsmin", async function (code) {
+		try {
+			const minified = await minify(code);
+			return minified.code;
+		} catch (err) {
+			console.error("Terser error: ", err);
+			// Fail gracefully.
+			return code
+		}
+	});
+  eleventyConfig.addFilter("cssmin", function (code) {
+		return new CleanCSS({}).minify(code).styles;
+	});
+  eleventyConfig.addTransform("htmlmin", function (content) {
+		if ((this.page.outputPath || "").endsWith(".html")) {
+			let minified = htmlmin.minify(content, {
+				useShortDoctype: true,
+				removeComments: true,
+				collapseWhitespace: true,
+			});
+
+			return minified;
+		}
+
+		// If not an HTML output, return content as-is
+		return content;
 	});
 };

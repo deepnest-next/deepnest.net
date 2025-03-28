@@ -185,6 +185,7 @@ eleventyNavigation:
 
 <!-- Lightbox Script -->
 <script>
+  {%- set js -%}
   let currentImagePath = '';
   // Store reference to the original container
   let lightboxImgContainer = null;
@@ -273,6 +274,8 @@ eleventyNavigation:
       closeLightbox();
     }
   });
+  {% endset -%}
+  {{- js | jsmin | safe -}}
 </script>
 
 <section class="my-16">

@@ -93,7 +93,7 @@
 		{#- Renders the CSS bundle using a separate file, if you can't set CSP directive style-src: 'unsafe-inline' #}
 
 		<style>
-			{{- css1 | postCSS | safe -}}
+			{{- css1 | postCSS | cssmin | safe -}}
 		</style>
 		{#<link rel="stylesheet" href="{% getBundleFileUrl 'css' %}">#}
 
@@ -105,16 +105,25 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap" rel="stylesheet">
 		<style>
+      {% set css %}
 			.font-handwriting {
 				font-family: 'Caveat', cursive;
 			}
+      {% endset %}
+      {{- css | postCSS | cssmin | safe -}}
 		</style>
     <script src="https://cdn.cookiehub.eu/c2/7bf24f81.js"></script>
     <script type="text/javascript">
+      {%- set js %}
+    // CookieHub
+    // https://cookiehub.eu
     document.addEventListener("DOMContentLoaded", function(event) {
     var cpm = {};
     window.cookiehub.load(cpm);
     });
+
+  {% endset -%}
+  {{- js | jsmin | safe -}}
     </script>
 
 	</head>
@@ -147,12 +156,16 @@
 		<script type="module" src="{% getBundleFileUrl 'js' %}"></script>
 		{%- if draft and env.ELEVENTY_RUN_MODE != 'build' %}
 			<script defer>
+  {%- set js %}
 				// Add a watermark to the page
 				document
 					.querySelectorAll('.draft')
 					.forEach(function (el) {
 						el.dataset.watermark = ('   ' + el.dataset.watermark + '   ').repeat(20000);
 					});
+
+  {% endset -%}
+  {{- js | jsmin | safe -}}
 			</script>
 		{% endif -%}
 	</body>

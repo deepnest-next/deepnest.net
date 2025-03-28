@@ -13,7 +13,10 @@ numberOfLatestPostsToShow: 5
 
 <p>The requested resource has been moved to <a href="{{metadata.url}}{{lang}}/releases/deepnest/" class="text-sky-650 hover:bg-sky-50 dark:hover:bg-sky-950">/{{lang}}/releases/deepnest</a>.</p>
 <script>
+  {%- set js %}
 	setTimeout(function() {
 		window.location.href = "{{metadata.url}}{{lang}}/releases/deepnest/";
 	}, 1000);
+  {% endset -%}
+  {{- js | jsmin | safe -}}
 </script>

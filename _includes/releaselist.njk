@@ -147,10 +147,11 @@
 	}
 {% endset %}
 <style type="text/css">
-	{{css | postCSS | safe}}
+	{{- css | postCSS | cssmin | safe -}}
 </style>
 
 <script defer>
+  {%- set js %}
   document.addEventListener('DOMContentLoaded', function() {
     // Initialize Alpine store
     if (typeof Alpine !== 'undefined') {
@@ -205,6 +206,8 @@
       }
     }
   });
+  {% endset -%}
+  {{- js | jsmin | safe -}}
 </script>
 
 {%- for post in postslist %}
