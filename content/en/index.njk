@@ -1,6 +1,6 @@
 ---
-title: "deepnest-next: 2D-desting & bin-packaging software"
-subtitle: "For plotters, laser & plasma cutting machines and other CNC machines"
+title: "deepnest-next: 2D Nesting & Bin-Packaging Software"
+subtitle: "For plotters, laser & plasma cutters, and other CNC machines"
 eleventyNavigation:
   key: "Home"
   order: 1
@@ -72,24 +72,30 @@ eleventyNavigation:
 	</div>
 </section>
 
-<!-- New Screenshot Gallery Section -->
+<!-- Screenshot Gallery Section -->
 <section class="my-16">
   <h2 class="text-3xl font-bold mb-8">Screenshots</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
     <!-- Screenshot 1 -->
-    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('Screenshot_2025-03-23_002455.png', 'Main view of the application')">
+    <script type="template/text" id="screenshot_2025_1">
+    {% image 'content/img/screenshots/Screenshot_2025-03-23_002455.png', 'Main application view' %}
+    </script>
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('screenshot_2025_1', 'Main application view')">
       <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
         <div class="relative pb-[75%] overflow-hidden">
-          <img src="/img/screenshots/Screenshot_2025-03-23_002455.png" width="354" alt="Main view of the application" class="absolute inset-0 w-full h-full object-cover">
+          <img src="/img/screenshots/Screenshot_2025-03-23_002455.png" width="354" alt="Main application view" class="absolute inset-0 w-full h-full object-cover">
         </div>
         <div class="text-center pt-4 pb-2 px-2">
-          <p class="font-handwriting text-xl dark:text-white">Main view of the application</p>
+          <p class="font-handwriting text-xl dark:text-white">Main application view</p>
         </div>
       </div>
     </div>
 
     <!-- Screenshot 2 -->
-    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('parts2.png', 'File import and export')">
+    <script type="template/text" id="parts2_template">
+    {% image 'content/img/screenshots/parts2.png', 'File import and export' %}
+    </script>
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('parts2_template', 'File import and export')">
       <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
         <div class="relative pb-[75%] overflow-hidden">
           <img src="/img/screenshots/parts2.png" width="354" alt="File import and export" class="absolute inset-0 w-full h-full object-cover">
@@ -101,7 +107,10 @@ eleventyNavigation:
     </div>
 
     <!-- Screenshot 3 -->
-    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('nesting_results.png', 'Nesting results')">
+    <script type="template/text" id="nesting_results_template">
+    {% image 'content/img/screenshots/nesting_results.png', 'Nesting results' %}
+    </script>
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('nesting_results_template', 'Nesting results')">
       <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
         <div class="relative pb-[75%] overflow-hidden">
           <img src="/img/screenshots/nesting_results.png" width="354" alt="Nesting results" class="absolute inset-0 w-full h-full object-cover">
@@ -111,8 +120,12 @@ eleventyNavigation:
         </div>
       </div>
     </div>
+
     <!-- Screenshot 4 -->
-    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings.png', 'Settings')">
+    <script type="template/text" id="settings_template">
+    {% image 'content/img/screenshots/settings.png', 'Settings' %}
+    </script>
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings_template', 'Settings')">
       <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
         <div class="relative pb-[75%] overflow-hidden">
           <img src="/img/screenshots/settings.png" width="354" alt="Settings" class="absolute inset-0 w-full h-full object-cover">
@@ -122,19 +135,145 @@ eleventyNavigation:
         </div>
       </div>
     </div>
+
     <!-- Screenshot 5 -->
-    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings2.png', 'Settings 2')">
+    <script type="template/text" id="settings2_template">
+    {% image 'content/img/screenshots/settings2.png', 'Settings - Advanced' %}
+    </script>
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings2_template', 'Settings - Advanced')">
       <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
         <div class="relative pb-[75%] overflow-hidden">
-          <img src="/img/screenshots/settings2.png" width="354" alt="Settings 2" class="absolute inset-0 w-full h-full object-cover">
+          <img src="/img/screenshots/settings2.png" width="354" alt="Settings - Advanced" class="absolute inset-0 w-full h-full object-cover">
         </div>
         <div class="text-center pt-4 pb-2 px-2">
-          <p class="font-handwriting text-xl dark:text-white">Settings 2</p>
+          <p class="font-handwriting text-xl dark:text-white">Settings - Advanced</p>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 bg-black/90 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex items-center justify-center p-4">
+  <div class="relative max-w-6xl w-full mx-auto bg-transparent rounded-lg transform scale-95 transition-all duration-300">
+    <div class="absolute -top-12 right-0 flex items-center gap-4">
+      <button id="fullSizeToggle" onclick="openInNewWindow()" class="text-white hover:text-blue-400 transition-colors text-base flex items-center gap-2">
+        <span id="viewModeText">Open in new window</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </button>
+
+      <button onclick="closeLightbox()" class="text-white hover:text-blue-400 transition-colors text-3xl flex items-center gap-2">
+        <span class="text-base font-medium">Close</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="overflow-hidden rounded-lg shadow-2xl">
+      <img id="lightbox-img" src="" alt="" class="w-full max-h-[80vh] object-contain bg-black/60 transition-all duration-300">
+    </div>
+
+    <div class="mt-4 bg-black/60 p-4 rounded-lg">
+      <p id="lightbox-caption" class="text-white text-xl"></p>
+      <p class="text-gray-400 text-sm mt-2">Click outside the image or press ESC to close</p>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox Script -->
+<script>
+  let currentImagePath = '';
+  // Store reference to the original container
+  let lightboxImgContainer = null;
+
+  function openLightbox(imgSrc, caption) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+
+    // Get the image container on first use or if it's not available
+    if (!lightboxImgContainer) {
+      lightboxImgContainer = document.querySelector('#lightbox .overflow-hidden.rounded-lg.shadow-2xl');
+    }
+
+    // Get the template with the given ID
+    const template = document.getElementById(imgSrc);
+
+    if (template && template.tagName === 'SCRIPT') {
+      // Use the template HTML content
+      const templateContainer = document.createElement('div');
+      templateContainer.innerHTML = template.textContent.trim();
+
+      // Clear the container and prepare for new content
+      lightboxImgContainer.innerHTML = '';
+
+      // Get the picture element from the template
+      const picture = templateContainer.querySelector('picture');
+      if (picture) {
+        // Add appropriate classes to the responsive image
+        const img = picture.querySelector('img');
+        if (img) {
+          img.className = 'w-full max-h-[80vh] object-contain bg-black/60 transition-all duration-300';
+          img.removeAttribute('height');
+        }
+
+        // Add the picture element to the container
+        lightboxImgContainer.appendChild(picture);
+
+        // Show lightbox with animation
+        lightbox.classList.remove('opacity-0', 'pointer-events-none');
+        lightbox.querySelector('.max-w-6xl').classList.remove('scale-95');
+        lightbox.querySelector('.max-w-6xl').classList.add('scale-100');
+        lightboxCaption.textContent = caption;
+        document.body.style.overflow = 'hidden';
+
+        // Get the path for "open in new window" feature
+        const imgElement = picture.querySelector('img');
+        if (imgElement) {
+          currentImagePath = imgElement.src;
+        }
+      }
+    }
+  }
+
+  function openInNewWindow() {
+    // Open the current image in a new browser window
+    if (currentImagePath) {
+      window.open(currentImagePath, '_blank');
+    }
+  }
+
+  function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+
+    // Hide with animation
+    lightbox.classList.add('opacity-0');
+    lightbox.querySelector('.max-w-6xl').classList.remove('scale-100');
+    lightbox.querySelector('.max-w-6xl').classList.add('scale-95');
+
+    // After animation completes, disable pointer events
+    setTimeout(() => {
+      lightbox.classList.add('pointer-events-none');
+      document.body.style.overflow = 'auto';
+    }, 300);
+  }
+
+  // Close lightbox when clicking outside the content
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeLightbox();
+    }
+  });
+
+  // Close lightbox with Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+</script>
 
 <section class="my-16">
 {% if githubData.releases.length > 0 %}
