@@ -1,3 +1,4 @@
+import Image from "@11ty/eleventy-img";
 import { DateTime } from "luxon";
 import { marked } from 'marked';
 import markedBidi from "marked-bidi";
@@ -292,4 +293,24 @@ export default function (eleventyConfig) {
 	eleventyConfig.addFilter("sortAlphabetically", strings =>
 		(strings || []).sort((b, a) => b.localeCompare(a))
 	);
+
+  eleventyConfig.addShortcode("image", async function (src, alt, widths = ["auto"], sizes = "") {
+		return Image(src, {
+      outputDir: "./_site/img/",
+			widths,
+			formats: ["avif", "png","jpeg", "webp", "auto"],
+			returnType: "html",    // new in v6.0
+			htmlOptions: {         // new in v6.0
+				imgAttributes: {
+					alt,               // required, though "" works fine
+					sizes,             // required with more than one width, optional if single width output
+					loading: "lazy",   // optional
+					decoding: "async", // optional
+          "eleventy:ignore": ""
+				},
+        pictureAttributes: {},
+        fallback: "largest",
+			}
+		});
+	});
 };

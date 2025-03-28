@@ -189,7 +189,7 @@ export default async function (eleventyConfig) {
   // Image optimization: https://www.11ty.dev/docs/plugins/image/#eleventy-transform
   eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
     // Output formats for each image.
-    formats: ["avif", "png", "webp", "auto"],
+    formats: ["avif", "png", "jpeg", "webp", "auto"],
 
     widths: [354, "auto"],
     useCache: true,

@@ -77,7 +77,10 @@ eleventyNavigation:
   <h2 class="text-3xl font-bold mb-8">Screenshots</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
     <!-- Screenshot 1 -->
-    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('Screenshot_2025-03-23_002455.png', 'Hauptansicht der Anwendung')">
+    <script type="template/text" id="screenshot_2025_1">
+    {% image 'content/img/screenshots/Screenshot_2025-03-23_002455.png', 'blue' %}
+    </script>
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('screenshot_2025_1', 'Hauptansicht der Anwendung')">
       <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
         <div class="relative pb-[75%] overflow-hidden">
           <img src="/img/screenshots/Screenshot_2025-03-23_002455.png" width="354" alt="Hauptansicht der Anwendung" class="absolute inset-0 w-full h-full object-cover">
@@ -89,7 +92,10 @@ eleventyNavigation:
     </div>
 
     <!-- Screenshot 2 -->
-    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('parts2.png', 'Dateiimport und -export')">
+    <script type="template/text" id="parts2_template">
+    {% image 'content/img/screenshots/parts2.png', 'Dateiimport und -export' %}
+    </script>
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('parts2_template', 'Dateiimport und -export')">
       <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
         <div class="relative pb-[75%] overflow-hidden">
           <img src="/img/screenshots/parts2.png" width="354" alt="Dateiimport und -export" class="absolute inset-0 w-full h-full object-cover">
@@ -101,7 +107,10 @@ eleventyNavigation:
     </div>
 
     <!-- Screenshot 3 -->
-    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('nesting_results.png', 'Nesting Ergebnisse')">
+    <script type="template/text" id="nesting_results_template">
+    {% image 'content/img/screenshots/nesting_results.png', 'Nesting Ergebnisse' %}
+    </script>
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('nesting_results_template', 'Nesting Ergebnisse')">
       <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
         <div class="relative pb-[75%] overflow-hidden">
           <img src="/img/screenshots/nesting_results.png" width="354" alt="Nesting Ergebnisse" class="absolute inset-0 w-full h-full object-cover">
@@ -112,7 +121,10 @@ eleventyNavigation:
       </div>
     </div>
     <!-- Screenshot 4 -->
-    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings.png', 'Einstellungen')">
+    <script type="template/text" id="settings_template">
+    {% image 'content/img/screenshots/settings.png', 'Einstellungen' %}
+    </script>
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings_template', 'Einstellungen')">
       <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
         <div class="relative pb-[75%] overflow-hidden">
           <img src="/img/screenshots/settings.png" width="354" alt="Einstellungen" class="absolute inset-0 w-full h-full object-cover">
@@ -123,7 +135,10 @@ eleventyNavigation:
       </div>
     </div>
     <!-- Screenshot 5 -->
-    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings2.png', 'Einstellungen 2')">
+    <script type="template/text" id="settings2_template">
+    {% image 'content/img/screenshots/settings2.png', 'Einstellungen 2' %}
+    </script>
+    <div class="polaroid-container cursor-pointer transform transition-transform hover:scale-105" onclick="openLightbox('settings2_template', 'Einstellungen 2')">
       <div class="bg-white dark:bg-gray-700 p-4 shadow-lg rounded-sm">
         <div class="relative pb-[75%] overflow-hidden">
           <img src="/img/screenshots/settings2.png" width="354" alt="Einstellungen 2" class="absolute inset-0 w-full h-full object-cover">
@@ -289,7 +304,7 @@ eleventyNavigation:
 
 <!-- Lightbox -->
 <div id="lightbox" class="fixed inset-0 bg-black/90 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex items-center justify-center p-4">
-  <div class="relative max-w-4xl w-full mx-auto bg-transparent rounded-lg transform scale-95 transition-all duration-300">
+  <div class="relative max-w-6xl w-full mx-auto bg-transparent rounded-lg transform scale-95 transition-all duration-300">
     <div class="absolute -top-12 right-0 flex items-center gap-4">
       <button id="fullSizeToggle" onclick="openInNewWindow()" class="text-white hover:text-blue-400 transition-colors text-base flex items-center gap-2">
         <span id="viewModeText">In neuem Fenster öffnen</span>
@@ -320,30 +335,56 @@ eleventyNavigation:
 <!-- Lightbox Script -->
 <script>
   let currentImagePath = '';
+  // Store reference to the original container
+  let lightboxImgContainer = null;
 
   function openLightbox(imgSrc, caption) {
     const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
     const lightboxCaption = document.getElementById('lightbox-caption');
 
-    // Save the current image path for the "open in new window" feature
-    currentImagePath = '/img/screenshots/' + imgSrc;
+    // Get the image container on first use or if it's not available
+    if (!lightboxImgContainer) {
+      lightboxImgContainer = document.querySelector('#lightbox .overflow-hidden.rounded-lg.shadow-2xl');
+    }
 
-    // Preload image
-    const img = new Image();
-    img.src = currentImagePath;
+    // Get the template with the given ID
+    const template = document.getElementById(imgSrc);
 
-    img.onload = function() {
-      // Set image and caption
-      lightboxImg.src = currentImagePath;
-      lightboxCaption.textContent = caption;
+    if (template && template.tagName === 'SCRIPT') {
+      // Use the template HTML content
+      const templateContainer = document.createElement('div');
+      templateContainer.innerHTML = template.textContent.trim();
 
-      // Show lightbox with animation
-      lightbox.classList.remove('opacity-0', 'pointer-events-none');
-      lightbox.querySelector('.max-w-4xl').classList.remove('scale-95');
-      lightbox.querySelector('.max-w-4xl').classList.add('scale-100');
-      document.body.style.overflow = 'hidden';
-    };
+      // Clear the container and prepare for new content
+      lightboxImgContainer.innerHTML = '';
+
+      // Get the picture element from the template
+      const picture = templateContainer.querySelector('picture');
+      if (picture) {
+        // Add appropriate classes to the responsive image
+        const img = picture.querySelector('img');
+        if (img) {
+          img.className = 'w-full max-h-[80vh] object-contain bg-black/60 transition-all duration-300';
+          img.removeAttribute('height');
+        }
+
+        // Add the picture element to the container
+        lightboxImgContainer.appendChild(picture);
+
+        // Show lightbox with animation
+        lightbox.classList.remove('opacity-0', 'pointer-events-none');
+        lightbox.querySelector('.max-w-6xl').classList.remove('scale-95');
+        lightbox.querySelector('.max-w-6xl').classList.add('scale-100');
+        lightboxCaption.textContent = caption;
+        document.body.style.overflow = 'hidden';
+
+        // Get the path for "open in new window" feature
+        const imgElement = picture.querySelector('img');
+        if (imgElement) {
+          currentImagePath = imgElement.src;
+        }
+      }
+    }
   }
 
   function openInNewWindow() {
@@ -358,8 +399,8 @@ eleventyNavigation:
 
     // Hide with animation
     lightbox.classList.add('opacity-0');
-    lightbox.querySelector('.max-w-4xl').classList.remove('scale-100');
-    lightbox.querySelector('.max-w-4xl').classList.add('scale-95');
+    lightbox.querySelector('.max-w-6xl').classList.remove('scale-100');
+    lightbox.querySelector('.max-w-6xl').classList.add('scale-95');
 
     // After animation completes, disable pointer events
     setTimeout(() => {
