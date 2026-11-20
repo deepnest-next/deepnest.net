@@ -1,6 +1,6 @@
 # Deployment (Cloudflare Pages)
 
-Cloudflare Pages (project `deepnest-net`) builds the site on every push: `main` goes to production, other branches and PRs get a preview. The build runs `yarn build` with the Node version from `.nvmrc`.
+Cloudflare Pages (project `deepnest-net`) builds the site on every push: `main` goes to production, other branches and PRs get a preview. The build (Cloudflare build system v3) runs `yarn build`. The Node version comes from `.nvmrc`, which overrides the build image default, so change the version there.
 
 ## Environment variables
 
