@@ -12,9 +12,22 @@ Set in Cloudflare: **Workers & Pages → deepnest-net → Settings → Variables
 | `PATREON_TOKEN`, `PATREON_CAMPAIGN_ID` | `_data/sponsors.js` (Patreon members) | Patreon sponsors stay empty; the build continues |
 | `BUILD_MODE` | `_data/metadata.js`: site URL (`production` → `https://www.deepnest.net/`, `devel_cf` → `https://devel.deepnest-net.pages.dev/`) | URL falls back to `http://localhost:8080/` (links in sitemap and feeds point there) |
 
-### Symptom of a bad `GITHUB_TOKEN`
+### Symptoms of a bad `GITHUB_TOKEN`
 
-The build stops early with:
+**Token lifetime too long (403):** the token works, but the organization refuses it:
+
+```
+GET /orgs/deepnest-next/repos?type=public&per_page=100 - 403 ...
+[11ty] The 'deepnest-next' organization forbids access via a personal access tokens (classic)
+       if the token's lifetime is greater than 366 days. Please adjust your token's lifetime at
+       the following URL: https://github.com/settings/tokens/<id>
+```
+
+Fix: open that URL → **Regenerate token** → pick an expiration of at most 366 days → **Regenerate token**. The scopes stay the same, but the value changes, so save the new value in Cloudflare again (see "Save it in Cloudflare").
+
+Leaving the token out is no workaround. Without it the API allows only 60 requests per hour, and `_data/githubOrgReleases.js` alone needs one request per org repository (about 30) and more. The sponsors query does not work without a token at all.
+
+**Wrong or expired token (401):** the build stops early with:
 
 ```
 GET /orgs/deepnest-next/repos?type=public&per_page=100 - 401 ...
@@ -31,7 +44,7 @@ The token must belong to an **owner of the deepnest-next organization**. Private
 1. GitHub → avatar → **Settings** → **Developer settings** → **Personal access tokens** → **Tokens (classic)** → **Generate new token (classic)**
    (direct link: <https://github.com/settings/tokens/new>).
 2. **Note:** `deepnest.net Cloudflare build`
-3. **Expiration:** e.g. 1 year. Put the date in a calendar; GitHub also sends an e-mail before the token expires. An expired token breaks the build the same way as a wrong one.
+3. **Expiration:** at most **366 days**. Choose a preset or **Custom** with a date less than a year away, but **not "No expiration"**. The deepnest-next organization refuses classic tokens that live longer (see "Symptoms" below). Put the date in a calendar; GitHub also sends an e-mail before the token expires. An expired token breaks the build the same way as a wrong one.
 4. **Scopes:** check only
    - `read:user`: the Sponsors fields `isActive`, `createdAt`, `isOneTimePayment` require it (GitHub reports `INSUFFICIENT_SCOPES ... requires one of the following scopes: ['read:user']` without it)
    - `read:org`: reading the organization's data
@@ -47,13 +60,15 @@ Checked on 2026-11-20: without `read:user` the sponsors query fails. A token wit
 read -rs GITHUB_TOKEN && export GITHUB_TOKEN   # paste the token; it stays out of the shell history
 curl -s -H "Authorization: bearer $GITHUB_TOKEN" https://api.github.com/graphql \
   -d '{"query":"{ organization(login: \"deepnest-next\") { sponsorshipsAsMaintainer(first: 1, includePrivate: true) { totalCount nodes { isActive tier { adminInfo { isRetired } } } } } }"}'
+curl -s -H "Authorization: bearer $GITHUB_TOKEN" "https://api.github.com/orgs/deepnest-next/repos?type=public&per_page=1" | head -c 300; echo
 ```
 
 | Answer | Meaning |
 |---|---|
-| `{"data":{"organization":{"sponsorshipsAsMaintainer":{"totalCount":…` | good |
+| first command: `{"data":{"organization":{"sponsorshipsAsMaintainer":{"totalCount":…`, second: a list starting with `[{"id":…` | good |
 | `"Bad credentials"` | token wrong or expired |
 | `"type":"INSUFFICIENT_SCOPES"` | a scope is missing; the message names it |
+| `forbids access via a personal access tokens (classic) if the token's lifetime is greater than 366 days` | expiration too long: regenerate the token with at most 366 days |
 
 Optional, the full build with this token: `yarn install && yarn build` (the variable exported above is used).
 
