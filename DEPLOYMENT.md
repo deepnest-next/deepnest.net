@@ -8,11 +8,20 @@ Set in Cloudflare: **Workers & Pages → deepnest-net → Settings → Variables
 
 | Name | Used by | Without it |
 |---|---|---|
-| `GITHUB_TOKEN` | `_data/githubOrg.js`, `_data/githubOrgReleases.js` (org repos and releases), `_data/sponsors.js` (GitHub Sponsors) | Repos/releases still load (public data), but the GitHub sponsors stay empty. An **invalid or expired** token breaks the build (see below). |
+| `GITHUB_TOKEN` | `_data/githubData.js` (latest release, downloads, app notifications), `_data/githubOrg.js`, `_data/githubOrgReleases.js` (org repos and releases), `_data/sponsors.js` (GitHub Sponsors) | **Required.** Without it, every request counts against GitHub's anonymous limit of 60 per hour per IP, which Cloudflare's shared build IPs often exceed already (`403: rate limit exceeded`, see below). An **invalid or expired** token breaks the build too. |
 | `PATREON_TOKEN`, `PATREON_CAMPAIGN_ID` | `_data/sponsors.js` (Patreon members) | Patreon sponsors stay empty; the build continues |
 | `BUILD_MODE` | `_data/metadata.js`: site URL (`production` → `https://www.deepnest.net/`, `devel_cf` → `https://devel.deepnest-net.pages.dev/`) | URL falls back to `http://localhost:8080/` (links in sitemap and feeds point there) |
 
 ### Symptoms of a bad `GITHUB_TOKEN`
+
+**Rate limit (403) without a token:** a request went out without `GITHUB_TOKEN`:
+
+```
+[11ty/eleventy-fetch] Fetching https://api.github.com/orgs/deepnest-next/repos
+[11ty] Bad response for https://api.github.com/orgs/deepnest-next/repos (403): rate limit exceeded
+```
+
+Fix: make sure `GITHUB_TOKEN` is set for the environment that failed (Production or Preview), and that every request in `_data/` sends it (`fetchOptions` in `githubData.js`, `auth` in the Octokit files).
 
 **Token lifetime too long (403):** the token works, but the organization refuses it:
 
