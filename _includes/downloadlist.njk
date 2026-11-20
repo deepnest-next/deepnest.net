@@ -20,6 +20,9 @@
     {% if assets and assets.length > 0 %}
       <ul role="list" class="divide-y dark:divide-gray-700 divide-gray-200 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
         {%- for asset in assets %}
+          {#- Linux packages use the distro arch names: amd64/arm64 (.deb), x86_64/aarch64 (.rpm) -#}
+          {%- set isArm = 'arm64' in asset.name or 'aarch64' in asset.name %}
+          {%- set isX64 = 'x64' in asset.name or 'amd64' in asset.name or 'x86_64' in asset.name %}
           <li class="flex flex-col sm:flex-row sm:items-center justify-between py-5 px-3 sm:px-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors gap-4">
             <div class="flex w-full sm:w-0 sm:flex-1 items-center">
               {% if '-mac-' in asset.name %}
@@ -116,11 +119,11 @@
                     </span>
 
                     <!-- Architecture badges -->
-                    {% if 'arm64' in asset.name %}
+                    {% if isArm %}
                       <span class="inline-flex items-center rounded-md bg-purple-100 dark:bg-purple-900 px-2 py-1 text-xs font-medium text-purple-700 dark:text-purple-300">
                         ARM64
                       </span>
-                    {% elif 'x64' in asset.name %}
+                    {% elif isX64 %}
                       <span class="inline-flex items-center rounded-md bg-blue-100 dark:bg-blue-900 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-300">
                         x64/AMD64
                       </span>
@@ -134,17 +137,17 @@
 
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                   {% if '-mac-' in asset.name %}
-                    For macOS {% if 'arm64' in asset.name %}(Apple Silicon){% else %}(Intel){% endif %}
+                    For macOS {% if isArm %}(Apple Silicon){% else %}(Intel){% endif %}
                   {% elif 'darwin' in asset.name %}
-                    For macOS {% if 'arm64' in asset.name %}(Apple Silicon){% else %}(Intel){% endif %}
+                    For macOS {% if isArm %}(Apple Silicon){% else %}(Intel){% endif %}
                   {% elif 'win32' in asset.name %}
-                    For Windows {% if 'arm64' in asset.name %}(ARM){% else %}(Intel/AMD){% endif %}
+                    For Windows {% if isArm %}(ARM){% else %}(Intel/AMD){% endif %}
                   {% elif '.deb' in asset.name %}
-                    For Debian / Ubuntu (.deb) {% if 'arm64' in asset.name %}(ARM){% else %}(Intel/AMD){% endif %}
+                    For Debian / Ubuntu (.deb) {% if isArm %}(ARM){% else %}(Intel/AMD){% endif %}
                   {% elif '.rpm' in asset.name %}
-                    For Fedora / RHEL (.rpm) {% if 'arm64' in asset.name %}(ARM){% else %}(Intel/AMD){% endif %}
+                    For Fedora / RHEL (.rpm) {% if isArm %}(ARM){% else %}(Intel/AMD){% endif %}
                   {% elif 'linux' in asset.name %}
-                    For Linux {% if 'arm64' in asset.name %}(ARM){% else %}(Intel/AMD){% endif %}
+                    For Linux {% if isArm %}(ARM){% else %}(Intel/AMD){% endif %}
                   {% else %}
                     {{ 'downloads.generic_file' | t }}
                   {% endif %}
