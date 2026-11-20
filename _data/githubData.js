@@ -33,7 +33,8 @@ async function releases() {
 		verbose: true
 	});
 
-	return json;
+	// pre-releases (betas) stay off the website and the in-app notification feed; see deepnest/RELEASE.md
+	return Array.isArray(json) ? json.filter((release) => !release.prerelease && !release.draft) : json;
 };
 export default {
 	allRepos: await allRepos(),
